@@ -1,0 +1,45 @@
+Realizar un programa de gestión de inventario, con la siguiente funcionalidad:
+- se deben poder administrar (altas, bajas, modificaciones) articulos, con al menos los siguientes datos:
+  codigo, nombre, descripcion, rubro, precio de compra, precio de venta de lista, cantidad en stock
+- administracion de rubros
+- administracion de proveedores
+- administracion de clientes
+- ingreso de mercaderia con factura de compra, indicando
+  fecha de factura, nro de comprobante (pto de venta y nro correlativo), tipo (letra), proveedor, total comprado (suma de totales de los items)
+  lista de items (detalle del documento)
+  Al ingresar una factura, se debe incrementar la cantidad en stock de los productos comprados
+- egreso de mercaderia con factura de venta, indicando lo mismo que la de compra pero con clientes en lugar de proveedores
+  cada item tendra el precio de venta, no el de compra
+  
+El detalle de cada documento contendrá una o más filas con los siguientes datos: cantidad, codigo de producto,
+  descripcion de producto, precio unitario, porcentaje de iva aplicado (21 o 10.5), subtotal
+Se deberán discriminar los impuestos cuando se trate de una factura A. En el caso de las fact B o C no se discriminan los impuestos.
+
+Ejemplo:
+- se compran 
+    2 unidades de ProductoA, precio unitario (sin iva) $10, iva aplicado 21%
+    1 unidad de ProductoB, precio unitario sin iva $5, iva aplicado 10.5
+
+Factura A:
+----------------------------------------------------------------
+cant    cod     descripcion             PU      IVA     Subtotal
+   2    PA      ProductoA            10.00      21         20.00
+   1    PB      ProductoB             5.00      10.5        5.00
+                                                        --------
+                                                           25.00
+
+IVA 21      IVA 10.5        Subtotal IVA        Total general
+   4.2          0.53                4.73                29.73
+----------------------------------------------------------------
+
+
+Factura B-C:
+----------------------------------------------------------------
+cant    cod     descripcion             PU      IVA     Subtotal
+   2    PA      ProductoA            12.10      21         24.20
+   1    PB      ProductoB             5.53      10.5        5.53
+                                                        --------
+                                                           29.73
+----------------------------------------------------------------
+
+-- TODO

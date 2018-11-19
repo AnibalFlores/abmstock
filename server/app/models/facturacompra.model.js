@@ -12,7 +12,11 @@ module.exports = (sequelize, Sequelize) => {
         tipo: {
             type: Sequelize.CHAR
         }
-    }, {        
+    }, {// Nos aseguramos que no tengamos facturas repetidas de un mismo proveedor
+        indexes: [{
+            unique: true,
+            fields: ['proveedorId', 'puntoventa', 'numero']
+        }],
         tableName: 'facturascompras',
         timestamps: false,
     });

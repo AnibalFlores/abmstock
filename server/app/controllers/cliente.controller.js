@@ -33,7 +33,7 @@ exports.init = (req, res) => {
 				p.addTelefono(tel))
 	});
 
-	return res.send('Clientes Ok');
+	// return res.send('Clientes Ok');
 
 };
 
@@ -43,7 +43,7 @@ exports.findAll = (req, res) => {
         attributes: ['razonsocial', 'cuit', 'condicioniva'],
         include: [{
             model: Telefono,
-            as: 'Telefonos',
+            as: 'telefonos',
             attributes: [
                 ['numero', 'nro'], 'contacto', 'nota'
             ],

@@ -35,20 +35,65 @@ exports.init = (req, res) => {
 				articulo.setRubro(rub));
 	});
 
-	return res.send('Articulos Ok');
+	// return res.send('Articulos Ok');
 
 };
 
 // Listar todos los articulos y sus rubros
 exports.findAll = (req, res) => {
 	Articulo.findAll({
-		attributes: ['codigo', 'nombre', 'descripcion', 'preciocompra', 'precioventa', 'cantidad'],
+		attributes: ['id', 'codigo', 'nombre', 'descripcion', 'preciocompra', 'precioventa', 'cantidad'],
 		include: [{
 			model: Rubro,
-			attributes: ['nombre'],
-			as: 'Rubro',
+			attributes: ['id', 'nombre'],
+			as: 'rubro',
 		}]
 	}).then(articulos => {
 		res.json(articulos);
 	});
 };
+
+exports.findById = (req, res) => {
+	Articulo.findById(req.params.id).then(art => res.json(art))
+};
+
+exports.destroy = (req, res) => {
+	Articulo.destroy({
+		where: {
+			id: req.params.id
+		}
+	}).then(resul => res.send('borrado artículo con id: ' + resul))
+}
+
+exports.create = (req, res) => {
+	Articulo.create({
+		codigo: req.body.codigo,
+		nombre: req.body.nombre,
+		descripcion: req.body.descripcion,
+		preciocompra: req.body.preciocompra,
+		precioventa: req.body.precioventa,
+		cantidad: req.body.cantidad
+	}).then(art => {
+		art.setRubro(req.body.rubro)
+		res.send('Artículo creado con Id:' + art.id)
+		console.log(art.get())
+	})
+
+}
+
+exports.update = (req, res) => {
+	Articulo.update({
+			codigo: req.body.codigo,
+			nombre: req.body.nombre,
+			descripcion: req.body.descripcion,
+			preciocompra: req.body.preciocompra,
+			precioventa: req.body.precioventa,
+			cantidad: req.body.cantidad
+		}, {
+			where: {
+				id: req.params.id
+			}
+		})
+		.then((count) => res.send("Se cambiaron: " + count + " registro/s"))
+
+}

@@ -7,4 +7,6 @@ module.exports = function(app) {
  
     // Trae todos los proveedores (incluye los Telefonos)
     app.get('/api/proveedores/', proveedor.findAll);
+    
+   
 }

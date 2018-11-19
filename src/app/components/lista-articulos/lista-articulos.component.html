@@ -1,0 +1,32 @@
+<div
+><app-navbar></app-navbar>
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Precio Compra</th>
+        <th scope="col">Precio Venta</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Rubro</th>
+        <th scope="col"><button [routerLink]="['/nuevo-articulo/']" routerLinkActive="router-link-active">Nuevo</button></th>
+       </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let art of articulos">
+        <th scope="row">{{art.codigo}}</th>
+        <td>{{art.nombre}}</td>
+        <td>{{art.descripcion}}</td>
+        <td>{{art.preciocompra}}</td>
+        <td>{{art.precioventa}}</td>
+        <td>{{art.cantidad}}</td>
+        <td>{{art.rubro.nombre}}</td>
+        <td>
+          <button [routerLink]="['/editar-articulo/'+ art.id]" routerLinkActive="router-link-active">Editar</button>
+          <button [routerLink]="['/borrar-articulo/'+ art.id]" routerLinkActive="router-link-active">Borrar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

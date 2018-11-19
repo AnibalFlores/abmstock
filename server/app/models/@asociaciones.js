@@ -12,19 +12,21 @@ module.exports = (db,sequelize,Sequelize) => {
     db.itemcompra = require('../models/itemcompra.model')(sequelize, Sequelize);
     db.itemventa = require('../models/itemventa.model')(sequelize, Sequelize);
 
+    db.usuario = require('../models/usuario.model')(sequelize, Sequelize);
+
     // Aca definimos lo importante y complicado las asociaciones en la DB
 
     // Ejemplo asociaciones n:m 
     // una tabla join proveedores_telefonos para guardar multiples telefonos por proveedor
     db.proveedor.belongsToMany(db.telefono, {
-        as: 'Telefonos',
+        as: 'telefonos',
         through: 'proveedores_telefonos',
         timestamps: false,
         foreignKey: 'id',
         otherKey: 'telefonoId'
     });
     db.telefono.belongsToMany(db.proveedor, {
-        as: 'Proveedores',
+        as: 'proveedores',
         through: 'proveedores_telefonos',
         timestamps: false,
         foreignKey: 'telefonoId',
@@ -33,14 +35,14 @@ module.exports = (db,sequelize,Sequelize) => {
 
     // una tabla clientes_telefonos para guardar multiples telefonos por cliente
     db.cliente.belongsToMany(db.telefono, {
-        as: 'Telefonos',
+        as: 'telefonos',
         through: 'clientes_telefonos',
         timestamps: false,
         foreignKey: 'id',
         otherKey: 'telefonoId'
     });
     db.telefono.belongsToMany(db.cliente, {
-        as: 'Clientes',
+        as: 'clientes',
         through: 'clientes_telefonos',
         timestamps: false,
         foreignKey: 'telefonoId',
@@ -53,30 +55,30 @@ module.exports = (db,sequelize,Sequelize) => {
     // Ejemplo más sencillo 1:N 
     // Un rubro tiene registro de varios articulos en tabla articulos tendremos una fk rubroId
     db.rubro.hasMany(db.articulo, {
-        as: 'Articulos'
+        as: 'articulos'
     });
     db.articulo.belongsTo(db.rubro, {
-        as: 'Rubro'
+        as: 'rubro'
     });
 
     // Ahora vamos por las consignas de facturación
     // una factura de compra tiene varios items de compra 
     db.facturacompra.hasMany(db.itemcompra, {
-         as: 'Items', onDelete: 'cascade'
+         as: 'items', onDelete: 'cascade'
     });
     // una factura de venta tiene varios items de venta
     db.facturaventa.hasMany(db.itemventa, {
-        as: 'Items', onDelete: 'cascade'
+        as: 'items', onDelete: 'cascade'
    });
 
    // un proveedor tiene varias facturas de compra
    db.proveedor.hasMany(db.facturacompra, {
-       as: 'Facturas' 
+       as: 'facturas' 
     })
 
    // un cliente tiene varias facturas de venta
    db.cliente.hasMany(db.facturaventa, {
-    as: 'Facturas'
+    as: 'facturas'
  })
 
     //db.profesor.hasMany(db.profesor, {

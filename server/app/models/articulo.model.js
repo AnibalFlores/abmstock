@@ -1,8 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Articulo = sequelize.define('articulo', {
         codigo: {
-            type: Sequelize.INTEGER,
-            primaryKey: true
+            type: Sequelize.INTEGER            
         },
         nombre: {
             type: Sequelize.STRING

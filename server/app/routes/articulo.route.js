@@ -4,7 +4,7 @@ module.exports = function(app) {
  
     // endpoints
     
-    // Iniciar datos: add Articulos & Telefonos
+    // Iniciar datos: add Articulos & Rubros
     app.get('/api/articulos/iniciar', articulos.init);
  
     // Trae todos los articulos (incluye los rubros)
@@ -14,7 +14,7 @@ module.exports = function(app) {
     app.get('/api/articulo/:id', articulos.findById);
 
     // Borra un articulo por su id
-     app.get('/api/articuloborrar/:id', articulos.destroy);
+     app.delete('/api/articuloborrar/:id', articulos.destroy);
 
     // Inserta un articulo nuevo
     app.post('/api/articulonuevo/', articulos.create);

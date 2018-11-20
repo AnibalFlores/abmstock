@@ -1,0 +1,47 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="art">
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label for="inputCodigo">Código: {{ art.codigo }}</label>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputNombre">Nombre: {{ art.nombre }}</label>
+        </div>
+      </div>
+      <div>
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <label for="inputDescripcion">Descripción: {{ art.descripcion }}</label>
+
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-1">
+            <label for="inputPrecioCompra">Precio de Compra: {{ art.preciocompra }}</label>
+
+          </div>
+          <div class="form-group col-md-1">
+            <label for="inputPrecioVenta">Precio de Venta: {{ art.precioventa }}</label>
+
+          </div>
+          <div class="form-group col-md-1">
+            <label for="inputCantidad">Cantidad: {{ art.cantidad }}</label>
+          </div>
+
+          <!--  <div class="form-group col-md-1">
+            <label for="inputCantidad">Rubro: {{ art.rubro.nombre }}</label>
+          </div> -->
+
+        </div>
+        <br>
+        <button type="button" class="btn btn-warning" (click)="borrar()">Confirmar</button>
+        <button type="button" class="btn btn-primary" routerLink="/listaarticulos">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

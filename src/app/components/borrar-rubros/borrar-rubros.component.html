@@ -1,0 +1,24 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="rub">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputNombre">Nombre: {{ rub.nombre }}</label>
+        </div>
+      </div>
+      <div class="alert alert-info" role="alert">
+        <small>
+          <strong>Atención: </strong>
+          Los artículos pertenecientes a este rubro seran reasignados a: <strong>{{ rubrodefault }}</strong>
+        </small>
+      </div>
+      <br>
+      <button type="button" class="btn btn-warning" (click)="borrar()">Confirmar</button>
+      <button type="button" class="btn btn-primary" routerLink="/listarubros">Cancelar</button>
+    </form>
+  </div>
+</div>

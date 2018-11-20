@@ -18,6 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         cantidad: {
             type: Sequelize.INTEGER
         }
+       
     }, {
         tableName: 'articulos',
         timestamps: false,

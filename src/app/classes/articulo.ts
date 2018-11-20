@@ -1,3 +1,5 @@
+import { Rubro } from './rubro';
+
 export class Articulo {
     id: number;
     codigo: number;
@@ -6,5 +8,5 @@ export class Articulo {
     preciocompra: number;
     precioventa: number;
     cantidad: number;
-    rubro: number;
+    rubro: Rubro;
 }

@@ -1,0 +1,27 @@
+<div
+><app-navbar></app-navbar>
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Razon Social</th>
+        <th scope="col">Cuit</th>
+        <th scope="col">Condicion IVA</th>
+        <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-proveedor/']" routerLinkActive="router-link-active">Nuevo</button></th>
+       </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prov of proveedores">
+        <th scope="row">{{prov.id}}</th>
+        <td>{{prov.razonsocial}}</td>
+        <td>{{prov.cuit}}</td>
+        <td>{{prov.condicioniva}}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-proveedor/'+ prov.id]" routerLinkActive="router-link-active">Editar</button>
+          <button class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-proveedor/'+ prov.id]" routerLinkActive="router-link-active">Borrar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

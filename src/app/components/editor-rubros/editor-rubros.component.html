@@ -1,0 +1,22 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="rub">
+    <form class="center" #rubForm="ngForm">
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputCodigo">Nombre</label>
+          <input type="text" class="form-control" name="nombre" required minlength="3" [(ngModel)]="rub.nombre" placeholder="Nombre...">
+        </div>
+      </div>
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!rubForm.form.valid">Aceptar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

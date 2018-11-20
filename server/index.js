@@ -29,26 +29,29 @@ const db = require('./app/configs/db.config');
 const usuarios = require('./app/controllers/usuario.controller');
 const proveedores = require('./app/controllers/proveedor.controller');
 const clientes = require('./app/controllers/cliente.controller');
+const rubros = require('./app/controllers/rubro.controller');
 const articulos = require('./app/controllers/articulo.controller');
-   
+
 // el "force: true" borra todas las tablas y las crea de nuevo en cada ejecucion
-db.sequelize.sync({force: true}).then(() => {
+db.sequelize.sync({
+  force: true
+}).then(() => {
   console.log('**** Dropado todo y Resync con { force: true } ****');
-// aca creamos las entidades basicas   
-usuarios.init();
-proveedores.init();
-clientes.init();
-articulos.init();
-console.log('**** Datos iniciales generados con exito ****');
+
+  // aca llenamos las tablas de las entidades basicas el orden es importante  
+  usuarios.init();
+  proveedores.init();
+  clientes.init();
+  rubros.init();
+  articulos.init();
+  console.log('**** Datos iniciales generados con exito ****');
 });
 
 // cargamos todos los routes de la app
-require('./app/routes/route.js')(app);// 
+require('./app/routes/route.js')(app); // 
 
 // Iniciamos el Server
 db.env.listenOn
-var server = app.listen(db.env.puerto,db.env.listenOn, function () {
-  console.log("Server corriendo en http://%s:%s", server.address().address
-  , server.address().port)
+var server = app.listen(db.env.puerto, db.env.listenOn, function () {
+  console.log("Server corriendo en http://%s:%s", server.address().address, server.address().port)
 });
-

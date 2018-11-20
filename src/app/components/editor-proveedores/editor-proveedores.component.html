@@ -1,0 +1,43 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="pro">
+    <form class="center" #proForm="ngForm">
+      
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputNombre">Razón Social</label>
+          <input type="text" class="form-control" name="razonsocial" required [(ngModel)]="pro.razonsocial" placeholder="Nombre...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label for="inputDescripcion">Cuit</label>
+          <input type="text" class="form-control" name="cuit" required [(ngModel)]="pro.cuit" placeholder="Cuit...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputDescripcion">Condicion IVA</label>
+          <input type="text" class="form-control" name="condicioniva" required [(ngModel)]="pro.condicioniva" placeholder="Condicion IVA...">
+        </div>
+      </div>
+      
+      <div [formGroup]="proveedorForm" class="form-group col-md-2">
+        <label for="inputCantidad">Telefonos</label>
+        <select class="form-control" name="telefonos" formControlName="telefonosControl" >
+          <option [ngValue]="tel.id" *ngFor="let tel of pro.telefonos">{{ tel.numero }}</option>
+        </select>
+      </div>
+
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!proForm.form.valid">Aceptar</button>
+      </div>
+    </form>
+  </div>
+</div>

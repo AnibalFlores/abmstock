@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
     // aca voy agregando comodamente las rutas por modelo
     require('./articulo.route')(app);
     require('./proveedor.route')(app);

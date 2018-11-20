@@ -10,7 +10,7 @@
         <th scope="col">Precio Venta</th>
         <th scope="col">Cantidad</th>
         <th scope="col">Rubro</th>
-        <th scope="col"><button [routerLink]="['/nuevo-articulo/']" routerLinkActive="router-link-active">Nuevo</button></th>
+        <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-articulo/']" routerLinkActive="router-link-active">Nuevo</button></th>
        </tr>
     </thead>
     <tbody>
@@ -18,13 +18,13 @@
         <th scope="row">{{art.codigo}}</th>
         <td>{{art.nombre}}</td>
         <td>{{art.descripcion}}</td>
-        <td>{{art.preciocompra}}</td>
-        <td>{{art.precioventa}}</td>
-        <td>{{art.cantidad}}</td>
+        <td>{{art.preciocompra | currency: 1 : "$ "}}</td>
+        <td>{{art.precioventa | currency: 1 : "$ "}}</td>
+        <td>{{art.cantidad | number:'1.0'}}</td>
         <td>{{art.rubro.nombre}}</td>
         <td>
-          <button [routerLink]="['/editar-articulo/'+ art.id]" routerLinkActive="router-link-active">Editar</button>
-          <button [routerLink]="['/borrar-articulo/'+ art.id]" routerLinkActive="router-link-active">Borrar</button>
+          <button class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-articulo/'+ art.id]" routerLinkActive="router-link-active">Editar</button>
+          <button class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-articulo/'+ art.id]" routerLinkActive="router-link-active">Borrar</button>
         </td>
       </tr>
     </tbody>

@@ -12,6 +12,7 @@ export class LoginUserComponent implements OnInit {
   usuario = { nombre: '',
   clave: ''};
   error = false;
+  enviado = false;
 
   constructor(private authSrv: AuthService, private router: Router) { }
 
@@ -19,11 +20,13 @@ export class LoginUserComponent implements OnInit {
   }
 
   ingresar() {
+    this.enviado = true;
     this.authSrv.login(this.usuario.nombre, this.usuario.clave)
     .subscribe((response: Usuario) => {
       if (response === null) {
               console.log(response);
               this.error = true;
+              this.enviado = false;
       } else {
         this.authSrv.logueado = response;
         this.router.navigate(['/listaarticulos']);

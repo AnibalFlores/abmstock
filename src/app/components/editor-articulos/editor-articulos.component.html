@@ -3,48 +3,62 @@
   <div class="alert alert-dark" role="alert">
     {{ titulo }}
   </div>
-  <div>
-    <form class="center" *ngIf="art">
+  <div *ngIf="art">
+    <form class="center" #artForm="ngForm">
       <div class="form-row">
         <div class="form-group col-md-1">
           <label for="inputCodigo">Código</label>
-          <input type="text" class="form-control" name="codigo" [(ngModel)]="art.codigo" placeholder="Código...">
+          <input type="number" class="form-control" name="codigo" required min="1" [(ngModel)]="art.codigo" placeholder="Código...">
         </div>
+        <div [formGroup]="articuloForm" class="form-group col-md-2">
+          <label for="inputCantidad">Rubro</label>
+          <select class="form-control" name="rubro" formControlName="rubroControl" >
+            <option [ngValue]="rubro.id" *ngFor="let rubro of rubros">{{ rubro.nombre }}</option>
+          </select>
+        </div>
+
+      </div>
+      <div class="form-row">
         <div class="form-group col-md-3">
           <label for="inputNombre">Nombre</label>
-          <input type="text" class="form-control" name="nombre" [(ngModel)]="art.nombre" placeholder="Nombre...">
+          <input type="text" class="form-control" name="nombre" required [(ngModel)]="art.nombre" placeholder="Nombre...">
         </div>
       </div>
-      <div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label for="inputDescripcion">Descripción</label>
-            <input type="text" class="form-control" name="descripcion" [(ngModel)]="art.descripcion" placeholder="Descripción...">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-1">
-            <label for="inputPrecioCompra">Precio de Compra</label>
-            <input type="text" class="form-control" name="preciocompra" [(ngModel)]="art.preciocompra" placeholder="Precio de Compra...">
-          </div>
-          <div class="form-group col-md-1">
-            <label for="inputPrecioVenta">Precio de Venta</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="art.precioventa" placeholder="Precio de Venta...">
-          </div>
-          <div class="form-group col-md-1">
-            <label for="inputCantidad">Cantidad</label>
-            <input type="text" class="form-control" name="cantidad" [(ngModel)]="art.cantidad" placeholder="Cantidad...">
-          </div>
 
-          <div [formGroup]="articuloForm" class="form-group col-md-1">
-            <label for="inputCantidad">Rubro</label>
-            <select formControlName="rubroControl" class="form-control" name="rubro" >
-              <option [ngValue]="rubro.id" *ngFor="let rubro of rubros">{{ rubro.nombre }}</option>
-            </select>
-          </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputDescripcion">Descripción</label>
+          <input type="text" class="form-control" name="descripcion" required [(ngModel)]="art.descripcion" placeholder="Descripción...">
         </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label for="inputPrecioCompra">Precio de Compra</label>
+          <input type="number" class="form-control" name="preciocompra" required [(ngModel)]="art.preciocompra" placeholder="Precio de Compra...">
+        </div>
+        <div class="form-group col-md-1">
+          <label for="inputPrecioVenta">Precio de Venta</label>
+          <input type="number" class="form-control" name="email" required [(ngModel)]="art.precioventa" placeholder="Precio de Venta...">
+        </div>
+
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label for="inputCantidad">Cantidad</label>
+          <input type="number" class="form-control" onkeydown="return false" name="cantidad" required min="1" [(ngModel)]="art.cantidad" placeholder="Cantidad..." #cantidad="ngModel">
+        </div>
+        <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
+    class="alert alert-danger">
+          Hay un error en la cantidad.
+        </div>
+      </div>
+
+      <div>
         <br>
-        <button type="submit" class="btn btn-primary" (click)="confirmado()">Aceptar</button>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!artForm.form.valid">Aceptar</button>
       </div>
     </form>
   </div>

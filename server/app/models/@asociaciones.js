@@ -58,7 +58,7 @@ module.exports = (db,sequelize,Sequelize) => {
         as: 'articulos'
     });
     db.articulo.belongsTo(db.rubro, {
-        as: 'rubro'
+        as: 'rubro'        
     });
 
     // Ahora vamos por las consignas de facturación

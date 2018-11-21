@@ -87,7 +87,7 @@ exports.create = (req, res) => {
 		cuit: req.body.cuit,
 		condicioniva: req.body.condicioniva
 	}).then(pro => {
-		pro.setTelefono(req.body.telefono.id)
+		pro.addTelefono(req.body.telefonos)
 		res.json(pro)
 		console.log(pro.get())
 	})
@@ -95,11 +95,11 @@ exports.create = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	Articulo.update({
+	Proveedor.update({
 		razonsocial: req.body.razonsocial,
 		cuit: req.body.cuit,
 		condicioniva: req.body.condicioniva,
-			telefonoId: req.body.telefono.id
+		telefonos: req.body.telefonos
 			}, {
 			where: {
 				id: req.params.id
@@ -107,6 +107,6 @@ exports.update = (req, res) => {
 		})
 		.then((count) => {
 			console.log('Proveedores actualizados: ' + count);
-			res.json(Articulo.findByPk(req.params.id)) }) 
+			res.json(Proveedor.findByPk(req.params.id)) }) 
 
 }

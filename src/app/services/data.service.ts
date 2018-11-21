@@ -75,11 +75,11 @@ export class DataService {
   }
 
   putProveedor(pro: Proveedor) {
-    return this.httpCli.put<Articulo>(baseUrl + '/api/proveedorupdate/' + pro.id, JSON.stringify(pro), httpOptions);
+    return this.httpCli.put<Proveedor>(baseUrl + '/api/proveedorupdate/' + pro.id, JSON.stringify(pro), httpOptions);
   }
 
   newProveedor(pro: Proveedor) {
-    return this.httpCli.post<Articulo>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
+    return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
   }
 
   delProveedor(id: number) {

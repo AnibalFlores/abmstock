@@ -78,7 +78,7 @@ export class EditorProveedoresComponent implements OnInit {
     this.dataSrv.newProveedor(this.pro).subscribe(
       (a) => this.router.navigate(['/listaproveedores']),
       error => {
-        alert('Error al guardar el proveedor: ' + error);
+        alert('Error al crear el nuevo proveedor: ' + error);
         this.enviado = true;
       }
     );

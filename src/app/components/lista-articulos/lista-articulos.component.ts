@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { Articulo } from 'src/app/classes/articulo';
 import { forEach } from '@angular/router/src/utils/collection';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-lista-articulos',
@@ -11,12 +12,14 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class ListaArticulosComponent implements OnInit {
   articulos: any;
+  titulo = 'Articulos';
 
-  constructor(private dataSrv: DataService, private router: Router) { }
+  constructor(private authSrv: AuthService, private dataSrv: DataService, private router: Router) { }
 
-  ngOnInit()  {
-  this.dataSrv.getArticulos().subscribe(articulos => {
-    this.articulos = articulos; });
+  ngOnInit() {
+    this.dataSrv.getArticulos().subscribe(articulos => {
+      this.articulos = articulos;
+    });
   }
 
 }

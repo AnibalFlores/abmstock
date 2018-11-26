@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Articulo } from '../classes/articulo';
 import { Rubro } from '../classes/rubro';
 import { Proveedor } from '../classes/proveedor';
+import { Telefono } from '../classes/telefono';
+import { Cliente } from '../classes/cliente';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 const baseUrl = 'http://localhost:3000';
@@ -53,11 +55,11 @@ export class DataService {
   }
 
   putRubro(rub: Rubro) {
-    return this.httpCli.put<Articulo>(baseUrl + '/api/rubroupdate/' + rub.id, JSON.stringify(rub), httpOptions);
+    return this.httpCli.put<Rubro>(baseUrl + '/api/rubroupdate/' + rub.id, JSON.stringify(rub), httpOptions);
   }
 
   newRubro(rub: Rubro) {
-    return this.httpCli.post<Articulo>(baseUrl + '/api/rubronuevo/', JSON.stringify(rub), httpOptions);
+    return this.httpCli.post<Rubro>(baseUrl + '/api/rubronuevo/', JSON.stringify(rub), httpOptions);
   }
 
   delRubro(id: number) {
@@ -75,17 +77,67 @@ export class DataService {
   }
 
   putProveedor(pro: Proveedor) {
-    return this.httpCli.put<Articulo>(baseUrl + '/api/proveedorupdate/' + pro.id, JSON.stringify(pro), httpOptions);
+    return this.httpCli.put<Proveedor>(baseUrl + '/api/proveedorupdate/' + pro.id, JSON.stringify(pro), httpOptions);
   }
 
   newProveedor(pro: Proveedor) {
-    return this.httpCli.post<Articulo>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
+    return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
   }
 
   delProveedor(id: number) {
     return this.httpCli.delete(baseUrl + '/api/proveedorborrar/' + id, httpOptions);
   }
 
+  // Verbos para Clientes
+  getClientes() {
+    return this.httpCli.get(baseUrl + '/api/clientes', httpOptions);
+  }
+
+  getCliente(id: number): Observable<any> {
+    return this.httpCli.get(baseUrl + '/api/cliente/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  putCliente(cli: Cliente) {
+    return this.httpCli.put<Cliente>(baseUrl + '/api/clienteupdate/' + cli.id, JSON.stringify(cli), httpOptions);
+  }
+
+  newCliente(cli: Cliente) {
+    return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevo/', JSON.stringify(cli), httpOptions);
+  }
+
+  delCliente(id: number) {
+    return this.httpCli.delete(baseUrl + '/api/clienteborrar/' + id, httpOptions);
+  }
+
+  // Verbos para Telefonos
+  getTelefono(id: number): Observable<any> {
+    return this.httpCli.get(baseUrl + '/api/telefono/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  putTelefono(tel: Telefono) {
+    return this.httpCli.put<Telefono>(baseUrl + '/api/telefonoupdate/' + tel.id, JSON.stringify(tel), httpOptions);
+
+  }
+
+  newTelefono(tel: Telefono) {
+    return this.httpCli.post<Telefono>(baseUrl + '/api/telefononuevo/', JSON.stringify(tel), httpOptions);
+  }
+
+  delTelefono(id: number) {
+    return this.httpCli.delete(baseUrl + '/api/telefonoborrar/' + id, httpOptions);
+  }
+
+  asociarTelefonoProveedor(idTel, idProv) {
+    const body = { idtel: idTel, idprov: idProv };
+    return this.httpCli.post(baseUrl + '/api/telefonoproveedor/', JSON.stringify(body), httpOptions);
+  }
+
+  asociarTelefonoCliente(idTel, idCli) {
+    const body = { idtel: idTel, idcli: idCli };
+    return this.httpCli.post(baseUrl + '/api/telefonocliente/', JSON.stringify(body), httpOptions);
+  }
   // Verbos para Clientes
 
 

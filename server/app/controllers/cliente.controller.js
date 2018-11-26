@@ -38,20 +38,72 @@ exports.init = (req, res) => {
 };
 
 // esto me tiraba la join table "clientes_telefonos" que no quiero 
+// Listar todos los clientes con sus telefonos
 exports.findAll = (req, res) => {
-    Cliente.findAll({
-        attributes: ['razonsocial', 'cuit', 'condicioniva'],
-        include: [{
-            model: Telefono,
-            as: 'telefonos',
-            attributes: [
-                ['numero', 'nro'], 'contacto', 'nota'
-            ],
-            through: {
-                attributes: []
-            } // ^ aca es fundamental esto para que no agregue esa jodida join table al resultado
-        }]
-    }).then(clientes => {
-        res.json(clientes);
-    });
+	Cliente.findAll({
+		attributes: ['id', 'razonsocial', 'cuit', 'condicioniva'],
+		include: [{
+			model: Telefono,
+			as: 'telefonos',
+			attributes: ['id', 'numero', 'contacto', 'nota'],
+			through: {
+				attributes: []
+			} // ^ aca es fundamental esto para que no agregue esa jodida join table al resultado
+		}]
+	}).then(clientes => {
+		res.json(clientes);
+	});
 };
+
+exports.findById = (req, res) => {
+	Cliente.findByPk(req.params.id, {
+		attributes: ['id', 'razonsocial', 'cuit', 'condicioniva'],
+		include: [{
+			model: Telefono,
+			as: 'telefonos',
+			attributes: ['id', 'numero', 'contacto', 'nota'],
+			through: {
+				attributes: []
+			} // ^ aca es fundamental esto para que no agregue esa jodida join table al resultado
+		}]
+	}).then(cli => res.json(cli))
+};
+
+exports.destroy = (req, res) => {
+	Cliente.destroy({
+		where: {
+			id: req.params.id
+		}
+	}).then(response => res.json(response))
+}
+
+exports.create = (req, res) => {
+	Cliente.create({
+		razonsocial: req.body.razonsocial,
+		cuit: req.body.cuit,
+		condicioniva: req.body.condicioniva
+	}).then(cli => {
+		cli.addTelefono(req.body.telefonos)
+		res.json(cli)
+		console.log(cli.get())
+	})
+
+}
+
+exports.update = (req, res) => {
+	Cliente.update({
+			razonsocial: req.body.razonsocial,
+			cuit: req.body.cuit,
+			condicioniva: req.body.condicioniva,
+			telefonos: req.body.telefonos
+		}, {
+			where: {
+				id: req.params.id
+			}
+		})
+		.then((count) => {
+			console.log('Clientes actualizados: ' + count);
+			res.json(Cliente.findByPk(req.params.id))
+		})
+
+}

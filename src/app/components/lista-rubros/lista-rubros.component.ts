@@ -9,6 +9,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class ListaRubrosComponent implements OnInit {
   rubros: Rubro[];
+  titulo = 'Rubros';
 
   constructor(private dataSrv: DataService) {
     this.dataSrv.getRubros().subscribe((r: Rubro[]) => {

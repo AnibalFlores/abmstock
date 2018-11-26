@@ -5,4 +5,5 @@ module.exports = function (app) {
     require('./cliente.route')(app);
     require('./usuario.route')(app);
     require('./rubro.route')(app);
+    require('./telefono.route')(app);
 }

@@ -1,0 +1,34 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="tel">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputNumero">Numero: {{ tel.numero }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputContacto">Contacto: {{ tel.contacto }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputNota">Nota: {{ tel.nota }}</label>
+        </div>
+      </div>
+      <div class="alert alert-info" role="alert">
+        <small>
+          <strong>Atención: </strong>
+          Los clientes y proveedores con este número seran reasignados a: <strong>{{ telefonodefault }}</strong>
+        </small>
+      </div>
+      <br>
+      <button type="button" class="btn btn-warning" (click)="borrar()">Confirmar</button>
+      <button type="button" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
+    </form>
+  </div>
+</div>

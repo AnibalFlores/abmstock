@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 export class ListaProveedoresComponent implements OnInit {
 
   proveedores: any;
+  titulo = 'Proveedores';
 
   constructor(private dataSrv: DataService, private router: Router) { }
 
   ngOnInit()  {
-  this.dataSrv.getProveedores().subscribe(articulos => {
-    this.proveedores = articulos; });
+  this.dataSrv.getProveedores().subscribe(proveedores => {
+    this.proveedores = proveedores; });
   }
 
 }

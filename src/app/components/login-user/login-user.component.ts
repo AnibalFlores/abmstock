@@ -29,6 +29,7 @@ export class LoginUserComponent implements OnInit {
               this.enviado = false;
       } else {
         this.authSrv.logueado = response;
+        this.enviado = false;
         this.router.navigate(['/listaarticulos']);
       }
 

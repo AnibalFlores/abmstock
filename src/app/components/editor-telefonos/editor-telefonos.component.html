@@ -1,0 +1,35 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="tel">
+    <form class="center" #telForm="ngForm">
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputNumero">Numero</label>
+          <input type="text" class="form-control" name="numero" required [(ngModel)]="tel.numero" placeholder="Numero...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputContacto">Contacto</label>
+          <input type="text" class="form-control" name="contacto" [(ngModel)]="tel.contacto" placeholder="Contacto...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputNota">Nota</label>
+          <input type="text" class="form-control" name="nota" [(ngModel)]="tel.nota" placeholder="Nota...">
+        </div>
+      </div>
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!telForm.form.valid">Aceptar</button>
+        <button type="submit" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

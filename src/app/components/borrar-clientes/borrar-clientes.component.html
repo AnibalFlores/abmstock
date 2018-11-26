@@ -1,0 +1,29 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="clie">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputRazonSocial">Razon Social: {{ clie.razonsocial }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputCuit">Cuit: {{ clie.cuit }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputCategoriaIVA">Categoria IVA: {{ clie.condicioniva }}</label>
+        </div>
+      </div>
+      <br>
+      <button type="button" class="btn btn-warning" (click)="borrar()">Confirmar</button>
+      <button type="button" class="btn btn-primary" routerLink="/listaclientes">Cancelar</button>
+    </form>
+  </div>
+</div>
+

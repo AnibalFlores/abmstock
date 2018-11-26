@@ -11,7 +11,7 @@
           <input type="number" class="form-control" name="codigo" required min="1" [(ngModel)]="art.codigo" placeholder="Código...">
         </div>
         <div [formGroup]="articuloForm" class="form-group col-md-2">
-          <label for="inputCantidad">Rubro</label>
+          <label for="inputRubro">Rubro</label>
           <select class="form-control" name="rubro" formControlName="rubroControl" >
             <option [ngValue]="rubro.id" *ngFor="let rubro of rubros">{{ rubro.nombre }}</option>
           </select>

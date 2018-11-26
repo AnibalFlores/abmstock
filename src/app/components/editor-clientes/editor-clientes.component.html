@@ -1,0 +1,66 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div *ngIf="cli">
+    <form class="center" #cliForm="ngForm">
+      
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputNombre">Razón Social</label>
+          <input type="text" class="form-control" name="razonsocial" required [(ngModel)]="cli.razonsocial" placeholder="Nombre...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputDescripcion">Cuit</label>
+          <input type="text" class="form-control" name="cuit" required [(ngModel)]="cli.cuit" placeholder="Cuit...">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3" [formGroup]="clienteForm">
+          <label for="condicionIVA">Condicion IVA</label>
+          <select class="form-control" name="condicionIva" formControlName="ivaControl">
+              <option [value]="c.nombre" *ngFor="let c of cate">{{c.nombre}}</option>
+          </select>         
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputTelefonos">Telefonos</label>
+          <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Numero</th>
+              <th scope="col">Contacto</th>
+              <th scope="col">Nota</th>
+              <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-telcliente/'+ cli.id]" routerLinkActive="router-link-active">Nuevo</button></th>
+             </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tel of cli.telefonos">
+              <th scope="row">{{tel.id}}</th>
+              <td>{{tel.numero}}</td>
+              <td>{{tel.contacto}}</td>
+              <td>{{tel.nota}}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-telefono/'+ tel.id]" routerLinkActive="router-link-active">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-telefono/'+ tel.id]" routerLinkActive="router-link-active">Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <br>
+        <button type="submit" class="btn btn-primary" (click)="confirmado()" [disabled]="!cliForm.form.valid">Aceptar</button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -7,31 +7,53 @@
     <form class="center" #proForm="ngForm">
       
       <div class="form-row">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="inputNombre">Razón Social</label>
           <input type="text" class="form-control" name="razonsocial" required [(ngModel)]="pro.razonsocial" placeholder="Nombre...">
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-3">
           <label for="inputDescripcion">Cuit</label>
           <input type="text" class="form-control" name="cuit" required [(ngModel)]="pro.cuit" placeholder="Cuit...">
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-2">
-          <label for="inputDescripcion">Condicion IVA</label>
-          <input type="text" class="form-control" name="condicioniva" required [(ngModel)]="pro.condicioniva" placeholder="Condicion IVA...">
+        <div class="form-group col-md-3" [formGroup]="proveedorForm">
+          <label for="condicionIVA">Condicion IVA</label>
+          <select class="form-control" name="condicionIva" formControlName="ivaControl">
+              <option [value]="c.nombre" *ngFor="let c of cate">{{c.nombre}}</option>
+          </select>         
         </div>
       </div>
       
-      <div [formGroup]="proveedorForm" class="form-group col-md-2">
-        <label for="inputCantidad">Telefonos</label>
-        <select class="form-control" name="telefonos" formControlName="telefonosControl" >
-          <option [ngValue]="tel.id" *ngFor="let tel of pro.telefonos">{{ tel.numero }}</option>
-        </select>
+      <div class="form-group">
+        <label for="inputTelefonos">Telefonos</label>
+          <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Numero</th>
+              <th scope="col">Contacto</th>
+              <th scope="col">Nota</th>
+              <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-telproveedor/'+ pro.id]" routerLinkActive="router-link-active">Nuevo</button></th>
+             </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tel of pro.telefonos">
+              <th scope="row">{{tel.id}}</th>
+              <td>{{tel.numero}}</td>
+              <td>{{tel.contacto}}</td>
+              <td>{{tel.nota}}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" [routerLink]="['/editar-telefono/'+ tel.id]" routerLinkActive="router-link-active">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" [routerLink]="['/borrar-telefono/'+ tel.id]" routerLinkActive="router-link-active">Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div>

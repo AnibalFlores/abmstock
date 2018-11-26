@@ -1,6 +1,9 @@
-<div
-><app-navbar></app-navbar>
-<table class="table table-striped">
+<div>
+  <app-navbar></app-navbar>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
@@ -10,8 +13,9 @@
         <th scope="col">Precio Venta</th>
         <th scope="col">Cantidad</th>
         <th scope="col">Rubro</th>
-        <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-articulo/']" routerLinkActive="router-link-active">Nuevo</button></th>
-       </tr>
+        <th scope="col"><button class="btn btn-sm btn-outline-success" [routerLink]="['/nuevo-articulo/']"
+            routerLinkActive="router-link-active">Nuevo</button></th>
+      </tr>
     </thead>
     <tbody>
       <tr *ngFor="let art of articulos">

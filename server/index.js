@@ -27,6 +27,7 @@ const db = require('./app/configs/db.config');
 // aca importo los controles solo para llenar la base de datos
 // apenas la promesa del sync se ejecute
 const usuarios = require('./app/controllers/usuario.controller');
+const telefonos = require('./app/controllers/telefono.controller');
 const proveedores = require('./app/controllers/proveedor.controller');
 const clientes = require('./app/controllers/cliente.controller');
 const rubros = require('./app/controllers/rubro.controller');
@@ -40,6 +41,7 @@ db.sequelize.sync({
 
   // aca llenamos las tablas de las entidades basicas el orden es importante  
   usuarios.init();
+  telefonos.init();
   proveedores.init();
   clientes.init();
   rubros.init();

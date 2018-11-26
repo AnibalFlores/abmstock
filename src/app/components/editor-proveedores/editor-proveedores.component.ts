@@ -12,11 +12,12 @@ import { Proveedor } from 'src/app/classes/proveedor';
 })
 export class EditorProveedoresComponent implements OnInit {
 
-  proveedorForm = new FormGroup({ rubroControl: new FormControl() });
+  proveedorForm = new FormGroup({ ivaControl: new FormControl() });
   pro: Proveedor;
   nuevo = false;
   titulo = '';
   enviado = false;
+  cate = [{ nombre: 'Responsable Inscripto'}, {nombre: 'Consumidor Final'}, {nombre: 'Monotributista'}, { nombre: 'Exento'}];
 
   constructor(
     private fb: FormBuilder,
@@ -33,19 +34,27 @@ export class EditorProveedoresComponent implements OnInit {
       this.pro.cuit = '00-00000000-0';
       this.pro.condicioniva = 'Responsable Inscripto';
       this.titulo = 'Nuevo Proveedor';
+      // Fijamos condicion de iva en RI
+      this.proveedorForm.controls['ivaControl'].setValue('Responsable Inscripto');
     } else {
       this.dataSrv.getProveedor(+this.ruta.snapshot.paramMap.get('id')).subscribe(
-        (p: Proveedor) => {
+        (p) => {
           this.pro = p;
+          this.proveedorForm.controls['ivaControl'].setValue(p.condicioniva);
+          // console.log(this.pro.telefonos);
         },
         error => console.log(error));
-      this.titulo = 'Editar Articulo';
+      this.titulo = 'Editar Proveedor';
     }
   }
 
   // segun estemos editando o agregando hacemos put o post
   confirmado() {
     this.enviado = true;
+    // Aplicamos la condicion de iva seleccionada
+    const iva = this.proveedorForm.controls['ivaControl'].value;
+    this.pro.condicioniva = iva;
+
     if (this.pro.id !== -1) {
       this.guardarProveedor(); // put
     } else {

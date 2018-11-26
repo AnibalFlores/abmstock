@@ -45,9 +45,7 @@ exports.findAll = (req, res) => {
 		include: [{
 			model: Telefono,
 			as: 'telefonos',
-			attributes: [
-				['numero', 'nro'], 'contacto', 'nota'
-			],
+			attributes: ['id', 'numero', 'contacto', 'nota'],
 			through: {
 				attributes: []
 			} // ^ aca es fundamental esto para que no agregue esa jodida join table al resultado
@@ -63,9 +61,7 @@ exports.findById = (req, res) => {
 		include: [{
 			model: Telefono,
 			as: 'telefonos',
-			attributes: [
-				['numero', 'nro'], 'contacto', 'nota'
-			],
+			attributes: ['id', 'numero', 'contacto', 'nota'],
 			through: {
 				attributes: []
 			} // ^ aca es fundamental esto para que no agregue esa jodida join table al resultado
@@ -87,7 +83,7 @@ exports.create = (req, res) => {
 		cuit: req.body.cuit,
 		condicioniva: req.body.condicioniva
 	}).then(pro => {
-		pro.setTelefono(req.body.telefono.id)
+		pro.addTelefono(req.body.telefonos)
 		res.json(pro)
 		console.log(pro.get())
 	})
@@ -95,18 +91,19 @@ exports.create = (req, res) => {
 }
 
 exports.update = (req, res) => {
-	Articulo.update({
-		razonsocial: req.body.razonsocial,
-		cuit: req.body.cuit,
-		condicioniva: req.body.condicioniva,
-			telefonoId: req.body.telefono.id
-			}, {
+	Proveedor.update({
+			razonsocial: req.body.razonsocial,
+			cuit: req.body.cuit,
+			condicioniva: req.body.condicioniva,
+			telefonos: req.body.telefonos
+		}, {
 			where: {
 				id: req.params.id
 			}
 		})
 		.then((count) => {
 			console.log('Proveedores actualizados: ' + count);
-			res.json(Articulo.findByPk(req.params.id)) }) 
+			res.json(Proveedor.findByPk(req.params.id))
+		})
 
 }

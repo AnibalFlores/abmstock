@@ -15,6 +15,12 @@ import { BorrarRubrosComponent } from './components/borrar-rubros/borrar-rubros.
 import { ListaProveedoresComponent } from './components/lista-proveedores/lista-proveedores.component';
 import { EditorProveedoresComponent } from './components/editor-proveedores/editor-proveedores.component';
 import { BorrarProveedoresComponent } from './components/borrar-proveedores/borrar-proveedores.component';
+import { EditorTelefonosComponent } from './components/editor-telefonos/editor-telefonos.component';
+import { BorrarTelefonosComponent } from './components/borrar-telefonos/borrar-telefonos.component';
+import { ListaTelefonosComponent } from './components/lista-telefonos/lista-telefonos.component';
+import { ListaClientesComponent } from './components/lista-clientes/lista-clientes.component';
+import { EditorClientesComponent } from './components/editor-clientes/editor-clientes.component';
+import { BorrarClientesComponent } from './components/borrar-clientes/borrar-clientes.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,13 @@ import { BorrarProveedoresComponent } from './components/borrar-proveedores/borr
     BorrarRubrosComponent,
     ListaProveedoresComponent,
     EditorProveedoresComponent,
-    BorrarProveedoresComponent
+    BorrarProveedoresComponent,
+    EditorTelefonosComponent,
+    BorrarTelefonosComponent,
+    ListaTelefonosComponent,
+    ListaClientesComponent,
+    EditorClientesComponent,
+    BorrarClientesComponent
   ],
   imports: [
     BrowserModule,

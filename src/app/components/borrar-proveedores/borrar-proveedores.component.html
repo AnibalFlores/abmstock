@@ -1,3 +1,28 @@
-<p>
-  borrar-proveedores works!
-</p>
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+  <div>
+    <form class="center" *ngIf="prov">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputRazonSocial">Razon Social: {{ prov.razonsocial }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputCuit">Cuit: {{ prov.cuit }}</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="inputCategoriaIVA">Categoria IVA: {{ prov.condicioniva }}</label>
+        </div>
+      </div>
+      <br>
+      <button type="button" class="btn btn-warning" (click)="borrar()">Confirmar</button>
+      <button type="button" class="btn btn-primary" routerLink="/listaproveedores">Cancelar</button>
+    </form>
+  </div>
+</div>

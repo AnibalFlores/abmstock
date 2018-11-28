@@ -6,9 +6,9 @@
   <div *ngIf="art">
     <form class="center" #artForm="ngForm">
       <div class="form-row">
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-2">
           <label for="inputCodigo">Código</label>
-          <input type="number" class="form-control" name="codigo" required min="1" [(ngModel)]="art.codigo" placeholder="Código...">
+          <input type="text" class="form-control" name="codigo" required min="1" [(ngModel)]="art.codigo" placeholder="Código...">
         </div>
         <div [formGroup]="articuloForm" class="form-group col-md-2">
           <label for="inputRubro">Rubro</label>
@@ -34,21 +34,21 @@
 
 
       <div class="form-row">
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-2">
           <label for="inputPrecioCompra">Precio de Compra</label>
-          <input type="number" class="form-control" name="preciocompra" required [(ngModel)]="art.preciocompra" placeholder="Precio de Compra...">
+          <input [disabled]="admin" type="number" class="form-control" name="preciocompra" required [(ngModel)]="art.preciocompra" placeholder="Precio de Compra...">
         </div>
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-2">
           <label for="inputPrecioVenta">Precio de Venta</label>
-          <input type="number" class="form-control" name="email" required [(ngModel)]="art.precioventa" placeholder="Precio de Venta...">
+          <input [disabled]="admin" type="number" class="form-control" name="email" required [(ngModel)]="art.precioventa" placeholder="Precio de Venta...">
         </div>
 
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-1">
+        <div class="form-group col-md-2">
           <label for="inputCantidad">Cantidad</label>
-          <input type="number" class="form-control" onkeydown="return false" name="cantidad" required min="1" [(ngModel)]="art.cantidad" placeholder="Cantidad..." #cantidad="ngModel">
+          <input [disabled]="admin" type="number" class="form-control" onkeydown="return false" name="cantidad" required min="0" [(ngModel)]="art.cantidad" placeholder="Cantidad..." #cantidad="ngModel">
         </div>
         <div *ngIf="cantidad.invalid && (cantidad.dirty || cantidad.touched)"
     class="alert alert-danger">

@@ -2,15 +2,16 @@ var express = require('express');
 var app = express();
 
 
-// var bodyParser = require('body-parser'); <-- body parser deprecado ahora incluido en express
+// var bodyParser = require('body-parser'); // <-- body parser deprecado ahora incluido en express
 // app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true }))
 
 // middleware para corregir error CORS
 app.use(function (req, res, next) {
   // modifico los headers para definir las siguientes cositas
-  // Websites a los que permitir conexion (* cualquiera)
+  // Websites a los que permitir conexion (* cualquiera) peligroso
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Metodos que permitiremos
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -22,9 +23,9 @@ app.use(function (req, res, next) {
   // Por ultimo pasamos de este middleware a la siguiente capa con next() 
   next();
 });
-
+// Definimos la Base de Datos
 const db = require('./app/configs/db.config');
-// aca importo los controles solo para llenar la base de datos
+// aca importo los controllers solo para llenar la base de datos
 // apenas la promesa del sync se ejecute
 const usuarios = require('./app/controllers/usuario.controller');
 const telefonos = require('./app/controllers/telefono.controller');
@@ -38,8 +39,12 @@ db.sequelize.sync({
   force: true
 }).then(() => {
   console.log('**** Dropado todo y Resync con { force: true } ****');
+  
+  // genero los triggers de la db
+  require('./app/models/@storedprocedures')(db, db.sequelize, db.Sequelize);
 
-  // aca llenamos las tablas de las entidades basicas el orden es importante  
+  // aca llenamos las tablas de las entidades basicas el orden es importante
+  // sin facturas y algunos articulos en cero unidades 
   usuarios.init();
   telefonos.init();
   proveedores.init();

@@ -1,4 +1,5 @@
 import { Telefono } from './telefono';
+import { Facturacompra } from './facturacompra';
 
 export class Proveedor {
     id: number;
@@ -6,4 +7,5 @@ export class Proveedor {
     cuit: String;
     condicioniva: String;
     telefonos: [Telefono];
+    facturas: [Facturacompra];
 }

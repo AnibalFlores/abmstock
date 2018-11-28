@@ -10,3 +10,5 @@ footer {
     line-height: 40px;
     background-color: #b5b5b5;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -5,14 +5,14 @@
       <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
       <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
       <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Compras</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
+      <button routerLink="/compras" class="btn btn-sm btn-outline-primary" type="button">Compras</button>
+      <button routerLink="/ventas" class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
-    </form>
-    <form class="form-inline">
+     </form>
+    <!-- <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
     <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>
+    </form>  -->
   </nav>
 
   <nav *ngIf="compras" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
@@ -21,30 +21,25 @@
       <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>
       <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
       <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
-      <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Compras</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
+      <button routerLink="/compras" class="btn btn-sm btn-outline-primary" type="button">Compras</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
-    </form>
-    <form class="form-inline">
+     </form>
+    <!-- <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
     <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>
+    </form>  -->
   </nav>
 
-<nav *ngIf="ventas" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
+  <nav *ngIf="ventas" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i> ABM Stock: Ventas</a>
-      <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>
       <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
-      <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
       <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Compras</button>
-      <button class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
+      <button routerLink="/ventas" class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
-    </form>
-    <form class="form-inline">
+     </form>
+    <!-- <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
     <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
-    </form>
+    </form>  -->
   </nav>

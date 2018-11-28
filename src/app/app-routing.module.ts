@@ -13,10 +13,14 @@ import { BorrarProveedoresComponent } from './components/borrar-proveedores/borr
 import { ListaTelefonosComponent } from './components/lista-telefonos/lista-telefonos.component';
 import { EditorTelefonosComponent } from './components/editor-telefonos/editor-telefonos.component';
 import { BorrarTelefonosComponent } from './components/borrar-telefonos/borrar-telefonos.component';
-import { LoggedGuard } from './services/logged.guard';
 import { ListaClientesComponent } from './components/lista-clientes/lista-clientes.component';
 import { EditorClientesComponent } from './components/editor-clientes/editor-clientes.component';
 import { BorrarClientesComponent } from './components/borrar-clientes/borrar-clientes.component';
+import { ComprarComponent } from './components/comprar/comprar.component';
+import { VenderComponent } from './components/vender/vender.component';
+import { LoggedGuard } from './services/logged.guard';
+import { ComprasGuard } from './services/compras.guard';
+import { VentasGuard } from './services/ventas.guard';
 
 
 const routes: Routes = [
@@ -24,30 +28,34 @@ const routes: Routes = [
   { path: 'login', component: LoginUserComponent },
   // Articulos
   { path: 'listaarticulos', component: ListaArticulosComponent, canActivate: [LoggedGuard] },
-  { path: 'editar-articulo/:id', component: EditorArticulosComponent },
-  { path: 'nuevo-articulo', component: EditorArticulosComponent },
-  { path: 'borrar-articulo/:id', component: BorrarArticulosComponent },
+  { path: 'editar-articulo/:id', component: EditorArticulosComponent, canActivate: [LoggedGuard] },
+  { path: 'nuevo-articulo', component: EditorArticulosComponent, canActivate: [LoggedGuard] },
+  { path: 'borrar-articulo/:id', component: BorrarArticulosComponent, canActivate: [ComprasGuard] },
   // Rubros
-  { path: 'listarubros', component: ListaRubrosComponent },
-  { path: 'editar-rubro/:id', component: EditorRubrosComponent },
-  { path: 'nuevo-rubro', component: EditorRubrosComponent },
-  { path: 'borrar-rubro/:id', component: BorrarRubrosComponent },
-   // Proveedores
-   { path: 'listaproveedores', component: ListaProveedoresComponent },
-   { path: 'editar-proveedor/:id', component: EditorProveedoresComponent },
-   { path: 'nuevo-proveedor', component: EditorProveedoresComponent },
-   { path: 'borrar-proveedor/:id', component: BorrarProveedoresComponent },
-    // Clientes
-    { path: 'listaclientes', component: ListaClientesComponent },
-    { path: 'editar-cliente/:id', component: EditorClientesComponent },
-    { path: 'nuevo-cliente', component: EditorClientesComponent },
-    { path: 'borrar-cliente/:id', component: BorrarClientesComponent },
-   // Telefonos
-   { path: 'listatelefonos', component: ListaTelefonosComponent },
-   { path: 'editar-telefono/:id', component: EditorTelefonosComponent },
-   { path: 'nuevo-telproveedor/:id', component: EditorTelefonosComponent },
-   { path: 'nuevo-telcliente/:id', component: EditorTelefonosComponent },
-   { path: 'borrar-telefono/:id', component: BorrarTelefonosComponent },
+  { path: 'listarubros', component: ListaRubrosComponent, canActivate: [ComprasGuard] },
+  { path: 'editar-rubro/:id', component: EditorRubrosComponent, canActivate: [ComprasGuard] },
+  { path: 'nuevo-rubro', component: EditorRubrosComponent, canActivate: [ComprasGuard] },
+  { path: 'borrar-rubro/:id', component: BorrarRubrosComponent, canActivate: [ComprasGuard] },
+  // Proveedores
+  { path: 'listaproveedores', component: ListaProveedoresComponent, canActivate: [ComprasGuard] },
+  { path: 'editar-proveedor/:id', component: EditorProveedoresComponent, canActivate: [ComprasGuard] },
+  { path: 'nuevo-proveedor', component: EditorProveedoresComponent, canActivate: [ComprasGuard] },
+  { path: 'borrar-proveedor/:id', component: BorrarProveedoresComponent, canActivate: [ComprasGuard] },
+  // Clientes
+  { path: 'listaclientes', component: ListaClientesComponent, canActivate: [VentasGuard] },
+  { path: 'editar-cliente/:id', component: EditorClientesComponent, canActivate: [VentasGuard] },
+  { path: 'nuevo-cliente', component: EditorClientesComponent, canActivate: [VentasGuard] },
+  { path: 'borrar-cliente/:id', component: BorrarClientesComponent, canActivate: [VentasGuard] },
+  // Telefonos
+  { path: 'listatelefonos', component: ListaTelefonosComponent, canActivate: [LoggedGuard] },
+  { path: 'editar-telefono/:id', component: EditorTelefonosComponent, canActivate: [LoggedGuard] },
+  { path: 'nuevo-telproveedor/:id', component: EditorTelefonosComponent, canActivate: [LoggedGuard] },
+  { path: 'nuevo-telcliente/:id', component: EditorTelefonosComponent, canActivate: [LoggedGuard] },
+  { path: 'borrar-telefono/:id', component: BorrarTelefonosComponent, canActivate: [LoggedGuard] },
+  // Compras
+  { path: 'compras', component: ComprarComponent, canActivate: [ComprasGuard] },
+  // Ventas
+  { path: 'ventas', component: VenderComponent, canActivate: [VentasGuard] },
   // Default
   { path: '**', redirectTo: 'login' }
 ];

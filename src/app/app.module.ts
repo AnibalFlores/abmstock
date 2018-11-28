@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginUserComponent } from './components/login-user/login-user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ListaArticulosComponent } from './components/lista-articulos/lista-articulos.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EditorArticulosComponent } from './components/editor-articulos/editor-articulos.component';
@@ -21,6 +21,11 @@ import { ListaTelefonosComponent } from './components/lista-telefonos/lista-tele
 import { ListaClientesComponent } from './components/lista-clientes/lista-clientes.component';
 import { EditorClientesComponent } from './components/editor-clientes/editor-clientes.component';
 import { BorrarClientesComponent } from './components/borrar-clientes/borrar-clientes.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ComprarComponent } from './components/comprar/comprar.component';
+import { VenderComponent } from './components/vender/vender.component';
+import { HttpErrorInterceptor } from './services/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,16 +46,20 @@ import { BorrarClientesComponent } from './components/borrar-clientes/borrar-cli
     ListaTelefonosComponent,
     ListaClientesComponent,
     EditorClientesComponent,
-    BorrarClientesComponent
+    BorrarClientesComponent,
+    ComprarComponent,
+    VenderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

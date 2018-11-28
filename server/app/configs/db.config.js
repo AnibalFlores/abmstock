@@ -24,4 +24,5 @@ db.env = env;
 // aca le puse @asociaciones asi me lo lista primero dentro de models y lo desovillo mas rapido
 require('../models/@asociaciones')(db,sequelize,Sequelize); // esto es como un funcion(args) pero a la node
 
+
 module.exports = db;

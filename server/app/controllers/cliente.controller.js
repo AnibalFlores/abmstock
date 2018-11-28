@@ -1,6 +1,8 @@
 const db = require('../configs/db.config.js');
 const Cliente = db.cliente;
 const Telefono = db.telefono;
+const Facturaventa = db.facturaventa;
+const Itemventa = db.itemventa;
 
 // Init data: Projects & Users
 exports.init = (req, res) => {
@@ -106,4 +108,49 @@ exports.update = (req, res) => {
 			res.json(Cliente.findByPk(req.params.id))
 		})
 
+}
+
+exports.nuevafactura = (req, res) => {
+	const items = req.body.facturas[0].items;
+	// console.log(items.length);
+
+	let bulks = [];
+	db.sequelize.transaction(function (t) {
+		for (let i = 0; i < items.length; i++) {
+			Itemventa.create({
+				idarticulo: items[i].idarticulo,
+				renglon: items[i].renglon,
+				cantidad: items[i].cantidad,
+				codigoproducto: items[i].codigoproducto,
+				descripcion: items[i].descripcion,
+				preciounitario: items[i].preciounitario,
+				iva: items[i].iva,
+				subtotal: items[i].subtotal
+			}, {
+				transaction: t
+			}).then(i => {
+				// guardamos los id de los items
+				bulks.push(i.id);
+
+			})
+		}
+		// console.log(bulks);
+		return Facturaventa.create({
+			fecha: req.body.facturas[0].fecha,
+			puntoventa: req.body.facturas[0].sucursal,
+			numero: req.body.facturas[0].numero,
+			tipo: req.body.facturas[0].tipo,
+			clienteId: req.body.id
+		}, {
+			transaction: t
+		}).then(function (fac) {
+			// asociamos los items a la factura (los triggers actualizan las cantidades de articulos)
+			fac.addItem(bulks, {
+				transaction: t
+			});
+			// devolvemos la factura generada
+			return res.json(fac.get());
+
+		}).catch(err => res.status(409).send(err));
+	})
 }

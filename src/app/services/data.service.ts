@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Articulo } from '../classes/articulo';
@@ -7,6 +7,7 @@ import { Rubro } from '../classes/rubro';
 import { Proveedor } from '../classes/proveedor';
 import { Telefono } from '../classes/telefono';
 import { Cliente } from '../classes/cliente';
+
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 const baseUrl = 'http://localhost:3000';
@@ -25,6 +26,10 @@ export class DataService {
   // Verbos para Articulos
   getArticulos() {
     return this.httpCli.get(baseUrl + '/api/articulos', httpOptions);
+  }
+
+  getStock() {
+    return this.httpCli.get(baseUrl + '/api/stock', httpOptions);
   }
 
   getArticulo(id: number): Observable<any> {
@@ -84,6 +89,10 @@ export class DataService {
     return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
   }
 
+  newFacturaProveedor(pro: Proveedor) {
+    return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevafactura/', JSON.stringify(pro), httpOptions);
+  }
+
   delProveedor(id: number) {
     return this.httpCli.delete(baseUrl + '/api/proveedorborrar/' + id, httpOptions);
   }
@@ -104,6 +113,10 @@ export class DataService {
 
   newCliente(cli: Cliente) {
     return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevo/', JSON.stringify(cli), httpOptions);
+  }
+
+  newFacturaCliente(cli: Cliente) {
+    return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevafactura/', JSON.stringify(cli), httpOptions);
   }
 
   delCliente(id: number) {
@@ -138,7 +151,5 @@ export class DataService {
     const body = { idtel: idTel, idcli: idCli };
     return this.httpCli.post(baseUrl + '/api/telefonocliente/', JSON.stringify(body), httpOptions);
   }
-  // Verbos para Clientes
-
 
 }

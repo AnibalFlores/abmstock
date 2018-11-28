@@ -1,0 +1,98 @@
+<div>
+  <app-navbar></app-navbar>
+  <div class="alert alert-dark" role="alert">
+    {{ titulo }}
+  </div>
+
+  <div *ngIf="seleccion">
+    <div [formGroup]="ventaForm" class="form-group col-md-4">
+      <label for="inputCliente">Cliente</label>
+      <select class="form-control" name="cliente" formControlName="clienteControl">
+        <option [ngValue]="clie.id" *ngFor="let clie of clientes">{{ clie.razonsocial }}</option>
+      </select>
+      <div><button (click)="siguiente()" class="btn btn-primary">Confirmar</button></div>
+    </div>
+
+    <div class="example-container">
+      <h4>Artículos a Facturar</h4>
+
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="articulos" [cdkDropListConnectedTo]="[doneList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let a of articulos" cdkDrag>{{ a.nombre}}</div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h4>Artículos en Stock</h4>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="stockActual" [cdkDropListConnectedTo]="[todoList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let a of stockActual" cdkDrag>{{ a.nombre }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!seleccion">
+    <div>
+      <label>Cliente: {{ clie.razonsocial }} Cuit: {{ clie.cuit }} Condicion IVA: {{ clie.condicioniva }}</label>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Tipo Factura:</label>
+        <select (change)="cambioTipo()" class="form-control" name="tipofactura" [(ngModel)]="factura.tipo">
+          <option [selected]="true">A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <label>Sucursal:</label>
+        <input class="form-control" type="number" min="0" [(ngModel)]="factura.sucursal">
+      </div>
+      <div class="col">
+        <label>Fecha:</label>
+        <input class="form-control" type="date" [(ngModel)]="factura.fecha">
+        <label>Numero Factura:</label>
+        <input class="form-control" type="number" min="0" [(ngModel)]="factura.numero">
+      </div>
+    </div>
+
+    <div>
+      <table class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Precio Unitario</th>
+            <th scope="col">IVA</th>
+            <th scope="col">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <th scope="row"><input class="form-control" type="number" min="1" (change)="cambio(item.renglon)"
+                [(ngModel)]="item.cantidad" required></th>
+            <td>{{ item.codigoproducto }}</td>
+            <td>{{ item.descripcion }}</td>
+            <td><input class="form-control" type="number" min="0" (change)="cambio(item.renglon)" [(ngModel)]="item.preciounitario"></td>
+            <td>
+              <select (change)="cambio(item.renglon)" class="form-control" name="iva" [(ngModel)]="item.iva">
+                <option [value]="21.0"> 21 %</option>
+                <option [value]="10.5"> 10.5 %</option>
+              </select></td>
+            <td>{{ item.subtotal | currency: 1 : "$ " }}</td>
+          </tr>
+          <tr>
+            <td> <div *ngIf="factura.tipo === 'A'">IVA 21%: {{ factura.iva21 | currency: 1 : "$ " }}</div> </td>
+            <td> <div *ngIf="factura.tipo === 'A'">IVA 10.5%: {{ factura.iva10 | currency: 1 : "$ " }}</div> </td>
+            <td> <div *ngIf="factura.tipo === 'A'">Subtotal IVA: {{ factura.subtotaliva | currency: 1 : "$ " }}</div> </td>
+            <td></td>
+            <td></td>
+            <td>Total:<strong> {{ factura.total | currency: 1 : "$ " }} </strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <button [disabled]="enviado" class="btn btn-primary" (click)="Confirmar()">Confirmar</button>
+      <button [disabled]="enviado" class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
+    </div>
+  </div>
+</div>

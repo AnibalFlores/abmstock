@@ -10,6 +10,9 @@ module.exports = function(app) {
     // Trae todos los articulos (incluye los rubros)
     app.get('/api/articulos', articulos.findAll);
 
+    // Trae todos los articulos en stock (incluye los rubros)
+    app.get('/api/stock', articulos.findAllStock);
+
     // busca un articulo por su id
     app.get('/api/articulo/:id', articulos.findById);
 

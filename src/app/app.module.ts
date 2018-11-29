@@ -26,6 +26,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ComprarComponent } from './components/comprar/comprar.component';
 import { VenderComponent } from './components/vender/vender.component';
 import { HttpErrorInterceptor } from './services/http-error.interceptor';
+import { VerFacturacompraComponent } from './components/ver-facturacompra/ver-facturacompra.component';
+import { VerFacturaventaComponent } from './components/ver-facturaventa/ver-facturaventa.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { HttpErrorInterceptor } from './services/http-error.interceptor';
     EditorClientesComponent,
     BorrarClientesComponent,
     ComprarComponent,
-    VenderComponent
+    VenderComponent,
+    VerFacturacompraComponent,
+    VerFacturaventaComponent
   ],
   imports: [
     BrowserModule,

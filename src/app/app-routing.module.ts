@@ -21,6 +21,7 @@ import { VenderComponent } from './components/vender/vender.component';
 import { LoggedGuard } from './services/logged.guard';
 import { ComprasGuard } from './services/compras.guard';
 import { VentasGuard } from './services/ventas.guard';
+import { VerFacturacompraComponent } from './components/ver-facturacompra/ver-facturacompra.component';
 
 
 const routes: Routes = [
@@ -56,6 +57,8 @@ const routes: Routes = [
   { path: 'compras', component: ComprarComponent, canActivate: [ComprasGuard] },
   // Ventas
   { path: 'ventas', component: VenderComponent, canActivate: [VentasGuard] },
+  // Listados
+  { path: 'verfacturacompra', component: VerFacturacompraComponent },
   // Default
   { path: '**', redirectTo: 'login' }
 ];

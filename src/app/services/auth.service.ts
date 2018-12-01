@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Usuario } from '../classes/usuario';
-import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
@@ -14,16 +13,22 @@ const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/js
 
 export class AuthService {
   user = new Usuario();
+  redirectUrl: string;
+  // en lugar de seguir la guia de angular
+  // https://angular.io/guide/router#teach-authguard-to-authenticate
+  // fijo el rol N como no logueado en el constructor de la clase usuario
+  // y con el BehaviorSubject logueado casteo el usuario con el "quien"
   private logueado = new BehaviorSubject(this.user);
   quien = this.logueado.asObservable();
-  url: String = 'api/usuarios';
 
   constructor(private client: HttpClient) {
 
   }
 
   nuevoLogueado(u: Usuario) {
+    // recibo el usuario del login
     this.user = u;
+    // y lo avisamos a los componentes suscriptos atraves del BehaviorSubject
     this.logueado.next(this.user);
 
   }
@@ -34,18 +39,15 @@ export class AuthService {
 
   isVenta() { return this.user.rol === 'V'; }
 
-  isLogged() {
-    if (this.user === undefined) { return false; }
-    return this.user.rol !== 'N'; }
+  isLogged() { return this.user.rol !== 'N'; }
 
-  // Observable devuelve usuario no olvidar hacer la suscripcion
+  // Observable devuelve usuario válido (no olvidar hacer la suscripcion desde la login page)
   login(usuario: String, clave: String) {
     const body = { usuario: usuario, clave: clave };
     return this.client.post('http://localhost:3000/api/login', body, httpOptions);
   }
 
-  logout() {
-    this.user.rol = 'N';
-  }
+  // re facil creamos un nuevo usuario (rol N) y lo mandamos a nuevologueado
+  logout() { this.nuevoLogueado(new Usuario()); }
 
 }

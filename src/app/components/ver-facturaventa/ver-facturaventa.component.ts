@@ -48,8 +48,16 @@ export class VerFacturaventaComponent implements OnInit {
 
   descargar() {
     this.armaPDF();
+    pdfMake.createPdf(this.factura_PDF).download(
+      'factura_' + this.clie.razonsocial.replace(' ', '_') + '_'
+      + this.factura.puntoventa + '_'
+      + this.factura.numero + '_'
+      + '.pdf');
+  }
+
+  ver() {
+    this.armaPDF();
     pdfMake.createPdf(this.factura_PDF).open();
-    // pdfMake.createPdf(this.docDefinition).download('factura.pdf');
   }
 
   private armaPDF() {

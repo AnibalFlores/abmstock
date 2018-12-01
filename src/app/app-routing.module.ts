@@ -29,6 +29,7 @@ import { VerFacturaventaComponent } from './components/ver-facturaventa/ver-fact
 
 const routes: Routes = [
   // Ingreso
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginUserComponent },
   // Articulos
   { path: 'listaarticulos', component: ListaArticulosComponent, canActivate: [LoggedGuard] },
@@ -66,7 +67,7 @@ const routes: Routes = [
   { path: 'verfacturacompra/:id', component: VerFacturacompraComponent }, // para que con el qr se pueda ver la factura
   { path: 'verfacturaventa/:id', component: VerFacturaventaComponent }, // sin estar logueado no tienen canActivate
   // Default
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

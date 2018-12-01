@@ -1,6 +1,6 @@
-module.exports = (db,sequelize,Sequelize) => {
-    
-    // Aca importo las entidades a asociar una por una
+module.exports = (db, sequelize, Sequelize) => {
+
+    // importo las entidades a asociar una por una
 
     db.telefono = require('../models/telefono.model')(sequelize, Sequelize);
     db.proveedor = require('../models/proveedor.model')(sequelize, Sequelize);
@@ -16,7 +16,8 @@ module.exports = (db,sequelize,Sequelize) => {
 
     // Aca definimos lo importante y complicado las asociaciones en la DB
 
-    // Ejemplo asociaciones n:m 
+    // Ejemplo asociaciones n:m (no es necesario pero lo hice para practicar sequelize)
+    // la ventaja es que todos los telefonos esta en un misma tabla y hay 
     // una tabla join proveedores_telefonos para guardar multiples telefonos por proveedor
     db.proveedor.belongsToMany(db.telefono, {
         as: 'telefonos',
@@ -33,7 +34,7 @@ module.exports = (db,sequelize,Sequelize) => {
         otherKey: 'id'
     });
 
-    // una tabla clientes_telefonos para guardar multiples telefonos por cliente
+    // y una tabla clientes_telefonos para guardar multiples telefonos por cliente
     db.cliente.belongsToMany(db.telefono, {
         as: 'telefonos',
         through: 'clientes_telefonos',
@@ -49,7 +50,8 @@ module.exports = (db,sequelize,Sequelize) => {
         otherKey: 'id'
     });
 
-    // lo mismo seria con por ejemplo domicilios varias entidades comparten la tabla domicilios via tablas join auxiliares de nombre: entidad_domicilio 
+    // TODO: lo mismo seria con por ejemplo domicilios varias entidades comparten la tabla domicilios
+    // via tablas join auxiliares de nombre: entidad_domicilio 
     // no hice domicilios pero seria igual a lo anterior
 
     // Ejemplo más sencillo 1:N 
@@ -58,32 +60,37 @@ module.exports = (db,sequelize,Sequelize) => {
         as: 'articulos'
     });
     db.articulo.belongsTo(db.rubro, {
-        as: 'rubro'        
+        as: 'rubro'
     });
 
     // Ahora vamos por las consignas de facturación
     // una factura de compra tiene varios items de compra 
     db.facturacompra.hasMany(db.itemcompra, {
-         as: 'items', onDelete: 'cascade'
+        as: 'items',
+        onDelete: 'cascade'
     });
     // una factura de venta tiene varios items de venta
     db.facturaventa.hasMany(db.itemventa, {
-        as: 'items', onDelete: 'cascade'
-   });
+        as: 'items',
+        onDelete: 'cascade'
+    });
 
-   // Si se borra el cliente o proveedor  se elimina todas la facturas asociadas
-   // (en un sistema real no debe ser posible pero por simplicidad aplicamos el cascade)
-   
-   // un proveedor tiene varias facturas de compra
-   db.proveedor.hasMany(db.facturacompra, {
-       as: 'facturas', onDelete: 'cascade' 
+    // Si se borra (solo puede el admin) el cliente o proveedor se eliminan
+    // todos los comprobantes de facturas asociados 
+    // (en un sistema real no debe ser posible borrar documentos contables
+    // pero por simplicidad aplicamos el cascade)
+
+    // un proveedor tiene varias facturas de compra
+    db.proveedor.hasMany(db.facturacompra, {
+        as: 'facturas',
+        onDelete: 'cascade'
     })
 
-   // un cliente tiene varias facturas de venta
-   
-   db.cliente.hasMany(db.facturaventa, {
-    as: 'facturas', onDelete: 'cascade'
- })
-   
-    return db; //comente esta linea porque hago un require explicito sin asignacion desde db.config.js
+    // un cliente tiene varias facturas de venta
+    db.cliente.hasMany(db.facturaventa, {
+        as: 'facturas',
+        onDelete: 'cascade'
+    })
+
+    return db; // devolvemos la db con las asociaciones aplicadas
 }

@@ -1,5 +1,7 @@
-<div *ngIf="usuario">
-<nav *ngIf="usuario.rol === 'A'" class="navbar fixed-top navbar-light" style="background-color: lightsteelblue;">
+
+<div class="fixed-top" *ngIf="!usuario">Deslogueado.</div>
+<div class="fixed-top" *ngIf="usuario">
+  <nav *ngIf="usuario.rol === 'A'" class="navbar fixed-top navbar-light" style="background-color: lightsteelblue;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i> ABM Stock: Admin</a>
       <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>

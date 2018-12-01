@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.CHAR
         }
 
-    }, { // las facturas que emitimos deben tener tipo pv y nro únicos
+    }, { // las facturas emitida deben tener tipo pv y nro únicos
         indexes: [{
             unique: true,
             fields: ['tipo', 'puntoventa', 'numero']

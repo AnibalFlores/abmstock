@@ -33,7 +33,6 @@ import { ListaFacturaventaComponent } from './components/lista-facturaventa/list
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,

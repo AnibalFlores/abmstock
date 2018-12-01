@@ -16,6 +16,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./ver-facturacompra.component.css']
 })
 export class VerFacturacompraComponent implements OnInit {
+
   factura: Facturacompra;
   prov: Proveedor;
   titulo = '';
@@ -47,8 +48,16 @@ export class VerFacturacompraComponent implements OnInit {
 
   descargar() {
     this.armaPDF();
+    pdfMake.createPdf(this.factura_PDF).download(
+      'factura_' + this.prov.razonsocial.replace(' ', '_') + '_'
+      + this.factura.puntoventa + '_'
+      + this.factura.numero + '_'
+      + '.pdf');
+  }
+
+  ver() {
+    this.armaPDF();
     pdfMake.createPdf(this.factura_PDF).open();
-    // pdfMake.createPdf(this.docDefinition).download('factura.pdf');
   }
 
   private armaPDF() {

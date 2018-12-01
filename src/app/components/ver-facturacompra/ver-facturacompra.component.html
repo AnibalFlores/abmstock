@@ -1,5 +1,4 @@
 <div>
-  <app-navbar></app-navbar>
   <div class="alert alert-dark" role="alert">
     {{ titulo }}
   </div>
@@ -12,7 +11,7 @@
         | Fecha: {{ factura.fecha| date: 'dd/MM/yyyy' }}
       </label>
     </div>
-    
+
     <div>
       <table class="table table-striped">
         <thead class="thead-light">
@@ -50,8 +49,12 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-primary" (click)="descargar()">Descargar PDF</button>
-      <button class="btn btn-secondary" [routerLink]="['/listafacturacompra']" routerLinkActive="router-link-active" >Volver</button>
+      <button class="btn btn-primary" (click)="ver()">Ver PDF</button>
+      <button class="btn btn-danger" (click)="descargar()">Descargar PDF</button>
+      <button class="btn btn-secondary" [routerLink]="['/listafacturacompra']" routerLinkActive="router-link-active">Volver</button>
     </div>
+  </div>
+  <div class="alert alert-info" role="alert">
+    <small>No olvide deshabilitar su bloqueador de publicidad para poder ver el comprobante.</small>
   </div>
 </div>

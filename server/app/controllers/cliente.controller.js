@@ -109,7 +109,46 @@ exports.update = (req, res) => {
 		})
 
 }
+// Con Promise.all()
+exports.nuevafactura = (req, res) => {
+	const body = req.body;
 
+	const items = body.facturas[0].items.map(item => Itemventa.findOrCreate({
+			where: {
+				id: item.id
+			},
+			defaults: {
+				idarticulo: item.idarticulo,
+				renglon: item.renglon,
+				cantidad: item.cantidad,
+				codigoproducto: item.codigoproducto,
+				descripcion: item.descripcion,
+				preciounitario: item.preciounitario,
+				iva: item.iva,
+				subtotal: item.subtotal
+			}
+		})
+		.spread((item, created) => item));
+
+	Cliente.findByPk(body.id)
+		.then(() => Facturaventa.create({
+			fecha: req.body.facturas[0].fecha,
+			puntoventa: req.body.facturas[0].puntoventa,
+			numero: req.body.facturas[0].numero,
+			tipo: req.body.facturas[0].tipo.trim(),
+			clienteId: req.body.id
+		}))
+		.then(factura => Promise.all(items).then(storedItems => factura.addItems(storedItems)).then(() => factura))
+		.then(factura => Facturaventa.findOne({
+			where: {
+				id: factura.id
+			}
+		}))
+		.then(facturacompleta => res.status(201).json(facturacompleta), error => res.status(400).json(error));
+
+}
+/* 
+ CON UNA TRANSACCION NO FUNCIONABA SIEMPRE
 exports.nuevafactura = (req, res) => {
 	const items = req.body.facturas[0].items;
 	// console.log(items.length);
@@ -137,7 +176,7 @@ exports.nuevafactura = (req, res) => {
 		// console.log(bulks);
 		return Facturaventa.create({
 			fecha: req.body.facturas[0].fecha,
-			puntoventa: req.body.facturas[0].sucursal,
+			puntoventa: req.body.facturas[0].puntoventa,
 			numero: req.body.facturas[0].numero,
 			tipo: req.body.facturas[0].tipo,
 			clienteId: req.body.id
@@ -153,4 +192,37 @@ exports.nuevafactura = (req, res) => {
 
 		}).catch(err => res.status(409).send(err));
 	})
-}
+}*/
+
+// Listar todos las Facturas de Ventas (sin items)
+exports.findAllfacturas = (req, res) => {
+	Facturaventa.findAll({
+		attributes: ['id', 'fecha', 'puntoventa', 'numero', 'tipo', 'clienteId']
+	}).then(facturas => {
+		res.json(facturas);
+	});
+};
+
+exports.findfacturaById = (req, res) => {
+	Facturaventa.findByPk(req.params.id, {
+		attributes: ['id', 'fecha', 'puntoventa', 'numero', 'tipo', 'clienteId'],
+		include: [{
+			model: Itemventa,
+			as: 'items',
+			attributes: ['id', 'idarticulo', 'renglon', 'cantidad', 'codigoproducto', 'descripcion', 'preciounitario', 'iva', 'subtotal']
+		}]
+	}).then(factura => {
+		res.json(factura);
+	});
+};
+
+exports.findultimafactura = (req, res) => {
+	Facturaventa.findAll({
+		limit: 1,
+		order: [
+			['createdAt', 'DESC']
+		]
+	}).then(function (factura) {
+		res.json(factura);
+	});
+};

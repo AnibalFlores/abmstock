@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/classes/usuario';
 
+
 @Component({
   selector: 'app-login-user',
   templateUrl: './login-user.component.html',
@@ -22,13 +23,13 @@ export class LoginUserComponent implements OnInit {
   ingresar() {
     this.enviado = true;
     this.authSrv.login(this.usuario.nombre, this.usuario.clave)
-    .subscribe((response: Usuario) => {
-      if (response === null) {
-              console.log(response);
+    .subscribe((u: Usuario) => {
+      if (u === null) {
+              console.log(u);
               this.error = true;
               this.enviado = false;
       } else {
-        this.authSrv.logueado = response;
+        this.authSrv.nuevoLogueado(u);
         this.enviado = false;
         this.router.navigate(['/listaarticulos']);
       }

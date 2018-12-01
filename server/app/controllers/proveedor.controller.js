@@ -111,6 +111,46 @@ exports.update = (req, res) => {
 
 }
 
+// https://www.codementor.io/mirko0/how-to-use-sequelize-with-node-and-express-i24l67cuz
+
+exports.nuevafactura = (req, res) => {
+	const body = req.body;
+
+	const items = body.facturas[0].items.map(item => Itemcompra.findOrCreate({
+			where: {
+				id: item.id
+			},
+			defaults: {
+				idarticulo: item.idarticulo,
+				renglon: item.renglon,
+				cantidad: item.cantidad,
+				codigoproducto: item.codigoproducto,
+				descripcion: item.descripcion,
+				preciounitario: item.preciounitario,
+				iva: item.iva,
+				subtotal: item.subtotal
+			}
+		})
+		.spread((item, created) => item));
+
+	Proveedor.findByPk(body.id)
+		.then(() => Facturacompra.create({
+			fecha: req.body.facturas[0].fecha,
+			puntoventa: req.body.facturas[0].puntoventa,
+			numero: req.body.facturas[0].numero,
+			tipo: req.body.facturas[0].tipo.trim(),
+			proveedorId: req.body.id
+		}))
+		.then(factura => Promise.all(items).then(storedItems => factura.addItems(storedItems)).then(() => factura))
+		.then(factura => Facturacompra.findOne({
+			where: {
+				id: factura.id
+			}
+		}))
+		.then(facturacompleta => res.status(201).json(facturacompleta), error => res.status(400).json(error));
+}
+/* ESTO NO ME ANDA BIEN EN TODOS LOS CASOS commitea antes de terminar
+ la transaccion 
 exports.nuevafactura = (req, res) => {
 	const items = req.body.facturas[0].items;
 	// console.log(items.length);
@@ -155,7 +195,38 @@ exports.nuevafactura = (req, res) => {
 		}).catch(err => res.send(err));
 		}
 	)
-	
-	
-
 }
+*/
+
+// Listar todos las Facturas de Compras (sin items)
+exports.findAllfacturas = (req, res) => {
+	Facturacompra.findAll({
+		attributes: ['id', 'fecha', 'puntoventa', 'numero', 'tipo', 'proveedorId']
+	}).then(facturas => {
+		res.json(facturas);
+	});
+};
+
+exports.findfacturaById = (req, res) => {
+	Facturacompra.findByPk(req.params.id, {
+		attributes: ['id', 'fecha', 'puntoventa', 'numero', 'tipo', 'proveedorId'],
+		include: [{
+			model: Itemcompra,
+			as: 'items',
+			attributes: ['id', 'idarticulo', 'renglon', 'cantidad', 'codigoproducto', 'descripcion', 'preciounitario', 'iva', 'subtotal']
+		}]
+	}).then(factura => {
+		res.json(factura);
+	});
+};
+
+exports.findultimafactura = (req, res) => {
+	Facturacompra.findAll({
+		limit: 1,
+		order: [
+			['createdAt', 'DESC']
+		]
+	}).then(function (factura) {
+		res.json(factura);
+	});
+};

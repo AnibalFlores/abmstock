@@ -10,7 +10,7 @@
       <select class="form-control" name="proveedor" formControlName="proveedorControl">
         <option [ngValue]="prov.id" *ngFor="let prov of proveedores">{{ prov.razonsocial }}</option>
       </select>
-      <div><button (click)="siguiente()" class="btn btn-primary">Confirmar</button></div>
+      <div><button (click)="siguiente()" class="btn btn-primary">Siguiente</button></div>
     </div>
 
     <div class="example-container">
@@ -45,7 +45,7 @@
           <option>C</option>
         </select>
         <label>Sucursal:</label>
-        <input class="form-control" type="number" min="0" [(ngModel)]="factura.sucursal">
+        <input class="form-control" type="number" min="0" [(ngModel)]="factura.puntoventa">
       </div>
       <div class="col">
         <label>Fecha:</label>
@@ -92,7 +92,7 @@
         </tbody>
       </table>
       <button [disabled]="enviado" class="btn btn-primary" (click)="Confirmar()">Confirmar</button>
-      <button [disabled]="enviado" class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
+      <button class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
     </div>
   </div>
 </div>

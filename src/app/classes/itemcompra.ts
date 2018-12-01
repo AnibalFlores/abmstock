@@ -7,4 +7,5 @@ export class Itemcompra {
     preciounitario: number;
     iva: number;
     subtotal: number;
+    proveedorId: number;
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { LoginUserComponent } from './components/login-user/login-user.component';
 import { ListaArticulosComponent } from './components/lista-articulos/lista-articulos.component';
 import { EditorArticulosComponent } from './components/editor-articulos/editor-articulos.component';
@@ -22,7 +23,9 @@ import { LoggedGuard } from './services/logged.guard';
 import { ComprasGuard } from './services/compras.guard';
 import { VentasGuard } from './services/ventas.guard';
 import { VerFacturacompraComponent } from './components/ver-facturacompra/ver-facturacompra.component';
-
+import { ListaFacturacompraComponent } from './components/lista-facturacompra/lista-facturacompra.component';
+import { ListaFacturaventaComponent } from './components/lista-facturaventa/lista-facturaventa.component';
+import { VerFacturaventaComponent } from './components/ver-facturaventa/ver-facturaventa.component';
 
 const routes: Routes = [
   // Ingreso
@@ -58,7 +61,10 @@ const routes: Routes = [
   // Ventas
   { path: 'ventas', component: VenderComponent, canActivate: [VentasGuard] },
   // Listados
-  { path: 'verfacturacompra', component: VerFacturacompraComponent },
+  { path: 'listafacturacompra', component: ListaFacturacompraComponent, canActivate: [ComprasGuard] },
+  { path: 'listafacturaventa', component: ListaFacturaventaComponent, canActivate: [VentasGuard] },
+  { path: 'verfacturacompra/:id', component: VerFacturacompraComponent }, // para que con el qr se pueda ver la factura
+  { path: 'verfacturaventa/:id', component: VerFacturaventaComponent }, // sin estar logueado no tienen canActivate
   // Default
   { path: '**', redirectTo: 'login' }
 ];

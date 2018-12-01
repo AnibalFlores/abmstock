@@ -20,8 +20,19 @@ module.exports = function (app) {
     // Actualiza un cliente por su id
     app.put('/api/clienteupdate/:id', cliente.update);
 
+    // FACTURAS VENTAS
+
     // Inserta una factura con items a un cliente por su id
     app.post('/api/clientenuevafactura/', cliente.nuevafactura);
+
+    // Trae todas las facturas de compras
+    app.get('/api/facturasventas/', cliente.findAllfacturas);
+
+    // Trae una factura con items a un proveedor por su id
+    app.get('/api/clientefactura/:id', cliente.findfacturaById);
+
+    // Trae la ultima factura creada
+    app.get('/api/ultimaFacturaVenta', cliente.findultimafactura);
 
 
 }

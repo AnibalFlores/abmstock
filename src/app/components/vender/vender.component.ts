@@ -7,6 +7,7 @@ import { Itemventa } from 'src/app/classes/itemventa';
 import { CdkDragDrop, transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-vender',
@@ -37,7 +38,7 @@ export class VenderComponent implements OnInit {
   constructor(private dataSrv: DataService, private router: Router) {
     this.factura.tipo = 'A';
     this.factura.fecha = this.currentDate();
-    this.factura.sucursal = 0;
+    this.factura.puntoventa = 0;
     this.factura.numero = 0;
   }
 
@@ -52,8 +53,9 @@ export class VenderComponent implements OnInit {
       this.cargarItems();
       this.seleccion = false;
     } else {
-      console.log(this.ventaForm.controls['clienteControl'].value);
-      console.log(this.articulos.length);
+      alert('Debe seleccionar un cliente y al menos un artículo.\nVuelva a intentar.');
+      // console.log(this.ventaForm.controls['clienteControl'].value);
+      // console.log(this.articulos.length);
     }
   }
 
@@ -99,19 +101,21 @@ export class VenderComponent implements OnInit {
     this.factura.items = this.items;
     this.clie.facturas = [this.factura];
     this.dataSrv.newFacturaCliente(this.clie)
-      .subscribe
-      (result => {
-        alert('Factura guardada.');
-        this.router.navigate(['/listaclientes']);
+    .subscribe(
+      fac => {
+        alert('Registro de Factura creado.');
+        this.router.navigate(['/verfacturaventa/' + fac.id]);
       },
-      error => {
-        alert(error);
-      },
-      () => {
-        alert('Rollback verifique sucursal y nro factura');
+      (error: HttpErrorResponse)  => {
+        alert(
+          'Error: Verifique Tipo, sucursal y número\n' +
+          'Status: ' + error.status + '\n' +
+          'Status Text: ' + error.statusText + '\n' +
+          'Mensaje del Servidor: ' + error.error.name
+        );
         this.enviado = false;
       }
-      );
+    );
 
   }
 

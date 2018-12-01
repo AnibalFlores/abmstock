@@ -71,25 +71,19 @@ module.exports = (db,sequelize,Sequelize) => {
         as: 'items', onDelete: 'cascade'
    });
 
+   // Si se borra el cliente o proveedor  se elimina todas la facturas asociadas
+   // (en un sistema real no debe ser posible pero por simplicidad aplicamos el cascade)
+   
    // un proveedor tiene varias facturas de compra
    db.proveedor.hasMany(db.facturacompra, {
-       as: 'facturas' 
+       as: 'facturas', onDelete: 'cascade' 
     })
 
    // un cliente tiene varias facturas de venta
+   
    db.cliente.hasMany(db.facturaventa, {
-    as: 'facturas'
+    as: 'facturas', onDelete: 'cascade'
  })
-
-    //db.profesor.hasMany(db.profesor, {
-    //    as: 'subordinados',
-    //    foreignKey: 'superior'
-    //});
-    // Cada Profesor responde a un solo jefe
-    //db.profesor.belongsTo(db.profesor, {
-    //    as: 'jefe',
-    //    foreignKey: 'superior'
-    //});
-    
+   
     return db; //comente esta linea porque hago un require explicito sin asignacion desde db.config.js
 }

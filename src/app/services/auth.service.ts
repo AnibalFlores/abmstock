@@ -1,43 +1,51 @@
 // https://www.uno-de-piera.com/consumir-api-rest-con-httpclient-angular-5/
 import { Injectable } from '@angular/core';
-import { Usuario } from '../classes/usuario';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { Usuario } from '../classes/usuario';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  logueado: Usuario;
+  user = new Usuario();
+  private logueado = new BehaviorSubject(this.user);
+  quien = this.logueado.asObservable();
   url: String = 'api/usuarios';
-  rol;
 
   constructor(private client: HttpClient) {
 
   }
 
-  isAdmin() { return this.logueado.rol === 'A'; }
+  nuevoLogueado(u: Usuario) {
+    this.user = u;
+    this.logueado.next(this.user);
 
-  isCompra() { return this.logueado.rol === 'C'; }
+  }
 
-  isVenta() { return this.logueado.rol === 'V'; }
+  isAdmin() { return this.user.rol === 'A'; }
+
+  isCompra() { return this.user.rol === 'C'; }
+
+  isVenta() { return this.user.rol === 'V'; }
 
   isLogged() {
-    if (this.logueado === undefined) { return false; }
-    return this.logueado.rol !== 'N'; }
+    if (this.user === undefined) { return false; }
+    return this.user.rol !== 'N'; }
 
-  // observable devuelve usuario no olvidar hacer la suscripcion
+  // Observable devuelve usuario no olvidar hacer la suscripcion
   login(usuario: String, clave: String) {
     const body = { usuario: usuario, clave: clave };
     return this.client.post('http://localhost:3000/api/login', body, httpOptions);
   }
 
   logout() {
-    this.logueado.rol = 'N';
+    this.user.rol = 'N';
   }
 
 }

@@ -1,3 +1,6 @@
+// ESTO ESTA DESACTIVADO lo use para capturar las respuestas de error del servidor
+// ver en seccion providers del app.modules.ts
+// se genera como un service pero con estos imports adicionales
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -19,7 +22,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // aca podriamos cambiar los headers del request por ejemplo
-    // si trabajamos con tokens
+    // si trabajamos con tokens jwt seria
 
     // request = request.clone({
     //  setHeaders: {
@@ -27,7 +30,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     //  }
     // });
 
-    // aca continuamos la ejecucion del HttpHandler
+    // aca continuamos la ejecucion del HttpHandler siempre retornando observable
     return next.handle(request).pipe(catchError((error, caught) => {
       // intercepta la respuesta de error y loguea en consola
       // console.log(error);
@@ -37,17 +40,19 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   private handleError(err: HttpErrorResponse): Observable<any> {
-    // Error 500 de servidor
-    if (err.status === 409) {
-      // navigate /delete cookies or whatever
-      console.log('Status: ' + err.status);
-      // vamos al login por las dudas
+    // Ejemplo con Error 400 del servidor
+    if (err.status === 400) {
+      // console.log('Status: ' + err.status);
+      // podemos ir al login por las dudas con
       // this.router.navigate(['/login']);
       // o metemos un alert
-      // alert('Error: Conflicto de datos revise sucursal y nro factura: ' +  err.name);
+      // alert(
+      // 'Error: Esta en conflicto de datos (revise tipo, sucursal y nro):\nMensaje del servidor: '
+      //  + JSON.stringify(err.error));
       // devolvemos un observable del mensaje error.
       return of(err);
     }
+    // si es otro error distinto a 400 lanzo 400 aunque no me anduvo mejor poner un return of(err) final
     throw err;
   }
 }

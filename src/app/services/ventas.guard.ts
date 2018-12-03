@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -12,10 +12,16 @@ export class VentasGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authSrv.isVenta() || this.authSrv.isAdmin()) { return true; }
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    return false;
-  }
+    state: RouterStateSnapshot): boolean {
 
+    if (this.authSrv.isVenta || this.authSrv.isAdmin) { return true; }
+
+    // resguardamos la direccion pedida
+    this.authSrv.redirectUrl = state.url;
+    // console.log(state.url);
+    // vamos al login
+    // this.router.navigate(['/']);
+    return false;
+
+  }
 }

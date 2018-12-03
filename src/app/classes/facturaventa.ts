@@ -1,7 +1,8 @@
 import { Itemventa } from './itemventa';
 
 export class Facturaventa {
-    sucursal: number;
+    id: number;
+    puntoventa: number;
     numero: number;
     tipo: String;
     fecha: String;
@@ -10,4 +11,5 @@ export class Facturaventa {
     iva10: number;
     subtotaliva: number;
     items: Itemventa[];
+    clienteId: number;
 }

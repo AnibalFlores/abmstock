@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Telefono } from 'src/app/classes/telefono';
-import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { Telefono } from 'src/app/classes/telefono';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-borrar-telefonos',

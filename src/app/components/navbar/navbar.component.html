@@ -1,4 +1,7 @@
-<nav *ngIf="admin" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
+
+<div class="fixed-top" *ngIf="!usuario">Deslogueado.</div>
+<div class="fixed-top" *ngIf="usuario">
+  <nav *ngIf="usuario.rol === 'A'" class="navbar fixed-top navbar-light" style="background-color: lightsteelblue;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i> ABM Stock: Admin</a>
       <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>
@@ -6,7 +9,9 @@
       <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
       <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
       <button routerLink="/compras" class="btn btn-sm btn-outline-primary" type="button">Compras</button>
+      <button routerLink="/listafacturacompra" class="btn btn-sm btn-outline-primary" type="button">Lista Compras</button>
       <button routerLink="/ventas" class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
+      <button routerLink="/listafacturaventa" class="btn btn-sm btn-outline-primary" type="button">Lista Ventas</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
     <!-- <form class="form-inline">
@@ -15,13 +20,14 @@
     </form>  -->
   </nav>
 
-  <nav *ngIf="compras" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
+  <nav *ngIf="usuario.rol === 'C'" class="navbar fixed-top navbar-light" style="background-color: lightsteelblue;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i> ABM Stock: Compras</a>
       <button routerLink="/listarubros" class="btn btn-sm btn-outline-primary" type="button">Rubros</button>
       <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
       <button routerLink="/listaproveedores" class="btn btn-sm btn-outline-primary" type="button">Proveedores</button>
       <button routerLink="/compras" class="btn btn-sm btn-outline-primary" type="button">Compras</button>
+      <button routerLink="/listafacturacompra" class="btn btn-sm btn-outline-primary" type="button">Lista Compras</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
     <!-- <form class="form-inline">
@@ -30,12 +36,13 @@
     </form>  -->
   </nav>
 
-  <nav *ngIf="ventas" class="navbar fixed-top navbar-light" style="background-color: #bbc4ca;">
+  <nav *ngIf="usuario.rol === 'V'" class="navbar fixed-top navbar-light" style="background-color: lightsteelblue;">
     <form class="form-inline">
       <a class="navbar-brand" href="#"><i class="fa fa-shopping-cart"></i> ABM Stock: Ventas</a>
       <button routerLink="/listaarticulos" class="btn btn-sm btn-outline-primary" type="button">Articulos</button>
       <button routerLink="/listaclientes" class="btn btn-sm btn-outline-primary" type="button">Clientes</button>
       <button routerLink="/ventas" class="btn btn-sm btn-outline-primary" type="button">Ventas</button>
+      <button routerLink="/listafacturaventa" class="btn btn-sm btn-outline-primary" type="button">Lista Ventas</button>
       <button (click)="salir()" class="btn btn-sm btn-outline-primary" type="button">Salir</button>
      </form>
     <!-- <form class="form-inline">
@@ -43,3 +50,4 @@
     <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
     </form>  -->
   </nav>
+</div>

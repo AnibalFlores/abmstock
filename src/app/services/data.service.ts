@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
 import { Articulo } from '../classes/articulo';
 import { Rubro } from '../classes/rubro';
 import { Proveedor } from '../classes/proveedor';
 import { Telefono } from '../classes/telefono';
 import { Cliente } from '../classes/cliente';
-
 
 const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 const baseUrl = 'http://localhost:3000';
@@ -23,6 +23,7 @@ export class DataService {
     const body = res;
     return body || {};
   }
+
   // Verbos para Articulos
   getArticulos() {
     return this.httpCli.get(baseUrl + '/api/articulos', httpOptions);
@@ -89,10 +90,6 @@ export class DataService {
     return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevo/', JSON.stringify(pro), httpOptions);
   }
 
-  newFacturaProveedor(pro: Proveedor) {
-    return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevafactura/', JSON.stringify(pro), httpOptions);
-  }
-
   delProveedor(id: number) {
     return this.httpCli.delete(baseUrl + '/api/proveedorborrar/' + id, httpOptions);
   }
@@ -113,10 +110,6 @@ export class DataService {
 
   newCliente(cli: Cliente) {
     return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevo/', JSON.stringify(cli), httpOptions);
-  }
-
-  newFacturaCliente(cli: Cliente) {
-    return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevafactura/', JSON.stringify(cli), httpOptions);
   }
 
   delCliente(id: number) {
@@ -150,6 +143,47 @@ export class DataService {
   asociarTelefonoCliente(idTel, idCli) {
     const body = { idtel: idTel, idcli: idCli };
     return this.httpCli.post(baseUrl + '/api/telefonocliente/', JSON.stringify(body), httpOptions);
+  }
+
+  // Verbos para facturas
+
+  newFacturaCliente(cli: Cliente) {
+    return this.httpCli.post<Cliente>(baseUrl + '/api/clientenuevafactura/', JSON.stringify(cli), httpOptions);
+  }
+
+  newFacturaProveedor(pro: Proveedor): Observable<any> {
+    return this.httpCli.post<Proveedor>(baseUrl + '/api/proveedornuevafactura/', JSON.stringify(pro), httpOptions);
+  }
+  // usado
+  getUltimaFacturacompra() {
+    return this.httpCli.get(baseUrl + '/api/ultimaFacturaCompra', httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  // no usado
+  getUltimaFacturaventa() {
+    return this.httpCli.get(baseUrl + '/api/ultimaFacturaVenta', httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  getFacturasCompras() {
+    return this.httpCli.get(baseUrl + '/api/facturascompras/').pipe(
+      map(this.extractData));
+  }
+
+  getFacturasVentas() {
+    return this.httpCli.get(baseUrl + '/api/facturasventas/').pipe(
+      map(this.extractData));
+  }
+
+  getFacturaProveedor(id: number) {
+    return this.httpCli.get(baseUrl + '/api/proveedorfactura/' + id, httpOptions).pipe(
+      map(this.extractData));
+  }
+
+  getFacturaCliente(id: number) {
+    return this.httpCli.get(baseUrl + '/api/clientefactura/' + id, httpOptions).pipe(
+      map(this.extractData));
   }
 
 }

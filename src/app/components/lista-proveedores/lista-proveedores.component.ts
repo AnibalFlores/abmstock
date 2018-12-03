@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { DataService } from 'src/app/services/data.service';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-lista-proveedores',
@@ -11,12 +12,15 @@ export class ListaProveedoresComponent implements OnInit {
 
   proveedores: any;
   titulo = 'Proveedores';
+  admin = false;
 
-  constructor(private dataSrv: DataService, private router: Router) { }
+  constructor(private dataSrv: DataService, private authSrv: AuthService) { }
 
-  ngOnInit()  {
-  this.dataSrv.getProveedores().subscribe(proveedores => {
-    this.proveedores = proveedores; });
+  ngOnInit() {
+    this.dataSrv.getProveedores().subscribe(proveedores => {
+      this.proveedores = proveedores;
+    });
+    this.admin = this.authSrv.isAdmin();
   }
 
 }

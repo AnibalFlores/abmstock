@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/data.service';
 import { Proveedor } from 'src/app/classes/proveedor';
 
 @Component({
@@ -17,10 +18,10 @@ export class EditorProveedoresComponent implements OnInit {
   nuevo = false;
   titulo = '';
   enviado = false;
+  admin = false;
   cate = [{ nombre: 'Responsable Inscripto'}, {nombre: 'Consumidor Final'}, {nombre: 'Monotributista'}, { nombre: 'Exento'}];
 
   constructor(
-    private fb: FormBuilder,
     private dataSrv: DataService,
     private ruta: ActivatedRoute,
     private router: Router, private authSrv: AuthService) { }
@@ -45,6 +46,7 @@ export class EditorProveedoresComponent implements OnInit {
         },
         error => console.log(error));
       this.titulo = 'Editar Proveedor';
+      this.admin = this.authSrv.isAdmin();
     }
   }
 

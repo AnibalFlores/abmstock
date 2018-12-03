@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Rubro } from 'src/app/classes/rubro';
 import { DataService } from 'src/app/services/data.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-borrar-rubros',

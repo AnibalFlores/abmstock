@@ -1,0 +1,40 @@
+<div>
+  <div>
+    <h5>{{ titulo }}</h5>
+  </div>
+  <div [formGroup]="listacompraForm" >
+    <label for="inputProveedor">Proveedor</label>
+    <select class="form-control" name="proveedor" (change)="cambiaProveedor()" formControlName="proveedorControl">
+      <option [ngValue] = 0>Todos</option>
+      <option [ngValue]="prov.id" *ngFor="let prov of proveedores">{{ prov.razonsocial }}</option>
+    </select>
+  </div>
+  <div *ngIf="facturas.length === 0">No registra facturas.</div>
+  <div *ngIf="facturas.length > 0">
+    <table class="table table-striped">
+      <thead class="thead-dark top">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Sucursal</th>
+          <th scope="col">Numero</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fac of facturas">
+          <th scope="row">{{fac.id}}</th>
+          <td>{{fac.fecha | date: 'dd/MM/yyyy'}}</td>
+          <td>{{fac.puntoventa}}</td>
+          <td>{{fac.numero}}</td>
+          <td>{{fac.tipo}}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary" [routerLink]="['/verfacturacompra/'+ fac.id]"
+              routerLinkActive="router-link-active">Ver</button>         
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

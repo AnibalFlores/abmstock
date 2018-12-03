@@ -1,5 +1,4 @@
 <div>
-  <app-navbar></app-navbar>
   <div class="alert alert-dark" role="alert">
     {{ titulo }}
   </div>
@@ -10,7 +9,7 @@
       <select class="form-control" name="cliente" formControlName="clienteControl">
         <option [ngValue]="clie.id" *ngFor="let clie of clientes">{{ clie.razonsocial }}</option>
       </select>
-      <div><button (click)="siguiente()" class="btn btn-primary">Confirmar</button></div>
+      <div><button (click)="siguiente()" class="btn btn-primary">Siguiente</button></div>
     </div>
 
     <div class="example-container">
@@ -45,7 +44,7 @@
           <option>C</option>
         </select>
         <label>Sucursal:</label>
-        <input class="form-control" type="number" min="0" [(ngModel)]="factura.sucursal">
+        <input class="form-control" type="number" min="0" [(ngModel)]="factura.puntoventa">
       </div>
       <div class="col">
         <label>Fecha:</label>
@@ -82,9 +81,15 @@
             <td>{{ item.subtotal | currency: 1 : "$ " }}</td>
           </tr>
           <tr>
-            <td> <div *ngIf="factura.tipo === 'A'">IVA 21%: {{ factura.iva21 | currency: 1 : "$ " }}</div> </td>
-            <td> <div *ngIf="factura.tipo === 'A'">IVA 10.5%: {{ factura.iva10 | currency: 1 : "$ " }}</div> </td>
-            <td> <div *ngIf="factura.tipo === 'A'">Subtotal IVA: {{ factura.subtotaliva | currency: 1 : "$ " }}</div> </td>
+            <td>
+              <div *ngIf="factura.tipo === 'A'">IVA 21%: {{ factura.iva21 | currency: 1 : "$ " }}</div>
+            </td>
+            <td>
+              <div *ngIf="factura.tipo === 'A'">IVA 10.5%: {{ factura.iva10 | currency: 1 : "$ " }}</div>
+            </td>
+            <td>
+              <div *ngIf="factura.tipo === 'A'">Subtotal IVA: {{ factura.subtotaliva | currency: 1 : "$ " }}</div>
+            </td>
             <td></td>
             <td></td>
             <td>Total:<strong> {{ factura.total | currency: 1 : "$ " }} </strong></td>
@@ -92,7 +97,7 @@
         </tbody>
       </table>
       <button [disabled]="enviado" class="btn btn-primary" (click)="Confirmar()">Confirmar</button>
-      <button [disabled]="enviado" class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
+      <button class="btn btn-secondary" (click)="Cancelar()">Cancelar</button>
     </div>
   </div>
 </div>

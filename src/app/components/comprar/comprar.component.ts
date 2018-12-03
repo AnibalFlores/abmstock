@@ -1,7 +1,7 @@
 // https://blog.angularindepth.com/building-interactive-lists-with-the-new-angular-7-drag-and-drop-tool-5f2402f8cb27
 // https://material.angular.io/cdk/drag-drop/overview
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DataService } from 'src/app/services/data.service';
 import { Articulo } from 'src/app/classes/articulo';
@@ -10,6 +10,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Itemcompra } from 'src/app/classes/itemcompra';
 import { Facturacompra } from 'src/app/classes/facturacompra';
 import { Router } from '@angular/router';
+import { share, shareReplay, publishLast, publishReplay } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+
+
 
 @Component({
   selector: 'app-comprar',
@@ -40,24 +44,26 @@ export class ComprarComponent implements OnInit {
   constructor(private dataSrv: DataService, private router: Router) {
     this.factura.tipo = 'A';
     this.factura.fecha = this.currentDate();
-    this.factura.sucursal = 0;
+    this.factura.puntoventa = 0;
     this.factura.numero = 0;
   }
 
   private currentDate() {
     const currentDate = new Date();
+    // devolvemos la fecha en formato ISO para HTML5 del type="Date"
     return currentDate.toISOString().substring(0, 10);
   }
 
   siguiente() {
+    // Preguntamos si hay un proovedor seleccionado y al menos un articulo para facturar
     if (this.compraForm.controls['proveedorControl'].value !== null && this.articulos.length !== 0) {
-      // console.log(this.compraForm.controls['proveedorControl'].value);
       this.prov = this.proveedores.find(p => p.id === this.compraForm.controls['proveedorControl'].value);
       this.cargarItems();
       this.seleccion = false;
     } else {
-      console.log(this.compraForm.controls['proveedorControl'].value);
-      console.log(this.articulos.length);
+      alert('Debe seleccionar un proveedor y al menos un artículo.\nVuelva a intentar.');
+      // console.log(this.compraForm.controls['proveedorControl'].value);
+      // console.log(this.articulos.length);
     }
   }
 
@@ -95,26 +101,35 @@ export class ComprarComponent implements OnInit {
   }
 
   Confirmar() {
-    // this.factura.items = [];
-    // for (let i = 0; i < this.items.length; i++) {
-    //  this.factura.items.push(this.items[i]);
-    // }
     this.enviado = true;
     this.factura.items = this.items;
     this.prov.facturas = [this.factura];
-    this.dataSrv.newFacturaProveedor(this.prov).subscribe(result => {
-      alert(result);
-    this.router.navigate(['/listaproveedores']);
-   });
-    // console.log(JSON.stringify(this.prov));
+
+    this.dataSrv.newFacturaProveedor(this.prov)
+      .subscribe(
+        fac => {
+          alert('Registro de Factura creado.');
+          this.router.navigate(['/verfacturacompra/' + fac.id]);
+        },
+        (error: HttpErrorResponse)  => {
+          alert(
+            'Error: Verifique Tipo, sucursal y número\n' +
+            'Status: ' + error.status + '\n' +
+            'Status Text: ' + error.statusText + '\n' +
+            'Mensaje del Servidor: ' + error.error.name
+          );
+          this.enviado = false;
+        }
+      );
   }
 
   Cancelar() {
     this.seleccion = true;
+    this.enviado = false;
     this.articulos = [];
     this.items = [];
     this.ngOnInit();
-    console.log('cancelado...');
+    // console.log('cancelado...');
 
   }
 

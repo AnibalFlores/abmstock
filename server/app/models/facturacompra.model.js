@@ -15,10 +15,10 @@ module.exports = (sequelize, Sequelize) => {
     }, {// Nos aseguramos que no tengamos facturas repetidas de un mismo proveedor
         indexes: [{
             unique: true,
-            fields: ['proveedorId', 'puntoventa', 'numero']
+            fields: ['proveedorId', 'puntoventa', 'numero', 'tipo']
         }],
         tableName: 'facturascompras',
-        timestamps: false,
+        timestamps: true,
     });
     return Facturacompra;
 }

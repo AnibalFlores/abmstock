@@ -7,7 +7,8 @@ import { Component, VERSION } from '@angular/core';
 })
 export class AppComponent {
   titulo = 'ABM Stock';
-  autor = 'AHF';
+  autor = 'Aníbal H. Flores';
   angular = `Angular v${VERSION.full}`;
-  anio = (new Date()).getFullYear();
+  anio = '2018';
+  // anio = (new Date()).getFullYear();
 }
